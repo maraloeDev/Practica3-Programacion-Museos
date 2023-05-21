@@ -6,7 +6,7 @@ package com.gf.daos;
 
 /**
  *
- * @author Eduardo
+ * @author Eduardo Martin-Sonseca Mario Ortuñez
  */
 public class CRUD {
     
