@@ -12,14 +12,13 @@ import javax.swing.JOptionPane;
  * @author Eduardo Martin-Sonseca Mario Ortuñez
  */
 public class ConexionBD {
-
+    
     public static Connection conn;
     public static String url = "jdbc:mysql://localhost:3306/dim_gf";
     public static final String USER_SQL = "root";
     public static final String PASSWORD_SQL = "";
-
-    public static void main(String[] args) {
-
+    
+    public void conectarBD() {
         try {
             conn = DriverManager.getConnection(url, USER_SQL, PASSWORD_SQL);
             JOptionPane.showMessageDialog(null, "Base de datos conectada");
@@ -27,6 +26,14 @@ public class ConexionBD {
             Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Base de datos no conectada");
         }
+    }
 
+    public void desconectarBD() {
+        try {
+            conn.close();
+            JOptionPane.showMessageDialog(null, "Te has desconectado de la Base de datos");
+        } catch (SQLException ex) {
+            Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
