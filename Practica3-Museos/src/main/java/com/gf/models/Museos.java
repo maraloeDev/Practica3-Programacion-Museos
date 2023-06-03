@@ -2,10 +2,10 @@ package com.gf.models;
 
 /**
  *
- * @author Eduardo Martin-Sonseca Mario Ortuñez
+ * @author Eduardo Martin-Sonseca
  */
 public class Museos {
-
+/* Clase en general Orientada a objetos que referencia a la Entidad denomidada Museos*/
     private int id_museo;
     private String nombre_museo;
     private int id_pais;

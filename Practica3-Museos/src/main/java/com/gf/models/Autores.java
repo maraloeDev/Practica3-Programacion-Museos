@@ -2,10 +2,10 @@ package com.gf.models;
 
 /**
  *
- * @author Eduardo Martin-Sonseca Mario Ortuñez
+ * @author Eduardo Martin-Sonseca
  */
 public class Autores {
-
+/* Clase en general Orientada a objetos que referencia a la Entidad denomidada Autores*/
     private int id_autor;
     private String nombre_autor;
     private int id_pais;

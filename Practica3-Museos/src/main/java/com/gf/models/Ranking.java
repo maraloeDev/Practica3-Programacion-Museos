@@ -2,10 +2,10 @@ package com.gf.models;
 
 /**
  *
- * @author Eduardo Martin-Sonseca Mario Ortuñez
+ * @author Eduardo Martin-Sonseca
  */
 public class Ranking {
-    
+    /* Clase en general Orientada a objetos que referencia a la Entidad denomidada Ranking*/
     public int id_ranking;
     public String nombre_jugador;
     public int puntos_Jugador;

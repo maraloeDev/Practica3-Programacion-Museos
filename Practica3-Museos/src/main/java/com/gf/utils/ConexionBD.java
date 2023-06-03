@@ -18,7 +18,11 @@ public class ConexionBD {
     public static final String USER_SQL = "root";
     public static final String PASSWORD_SQL = "";
     
-    public void conectarBD() {
+    /*Metodo que sirve para conectarse con la base de datos utilizando el objeto 
+    Connection y pasando los metodos estaticos desde la linea 17 a la 19 para
+    la conexion*/
+    
+    public void conectarBD() { 
         try {
             conn = DriverManager.getConnection(url, USER_SQL, PASSWORD_SQL);
             JOptionPane.showMessageDialog(null, "Base de datos conectada");
@@ -28,10 +32,11 @@ public class ConexionBD {
         }
     }
 
+    /*Metodo que sirve para cerrar la conexion con la base de datos*/
     public void desconectarBD() {
         try {
             conn.close();
-            JOptionPane.showMessageDialog(null, "Te has desconectado de la Base de datos");
+            JOptionPane.showMessageDialog(null, "Te has desconectado de la base de datos");
         } catch (SQLException ex) {
             Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
         }

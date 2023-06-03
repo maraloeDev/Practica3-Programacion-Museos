@@ -2,10 +2,10 @@ package com.gf.models;
 
 /**
  *
- * @author Eduardo Martin-Sonseca Mario Ortuñez
+ * @author Eduardo Martin-Sonseca
  */
 public class Obras {
-
+/* Clase en general Orientada a objetos que referencia a la Entidad denomidada Obras*/
     private int id_obra;
     private String nombre_obra;
     private String descripcion_obra;

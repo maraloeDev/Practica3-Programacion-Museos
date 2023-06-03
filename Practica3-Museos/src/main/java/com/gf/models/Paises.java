@@ -2,10 +2,10 @@ package com.gf.models;
 
 /**
  *
- * @author Eduardo Martin-Sonseca Mario Ortuñez
+ * @author Eduardo Martin-Sonseca
  */
 public class Paises {
-    
+    /* Clase en general Orientada a objetos que referencia a la Entidad denomidada Paises*/
     private int id_pais;
     private String nombre_pais;
 

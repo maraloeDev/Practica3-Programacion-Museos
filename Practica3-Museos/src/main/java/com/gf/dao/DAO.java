@@ -32,7 +32,8 @@ public class DAO {
     public DAO() throws SQLException {
         ConexionBD conexion = new ConexionBD();
         conexion.conectarBD();
-        try (Connection conn = conexion.getConn();  Statement st = conn.createStatement()) {
+        try (Connection conn = conexion.getConn();
+            Statement st = conn.createStatement()) {
             ResultSet rs;
 
             String sqlAutores = "SELECT * FROM autores;";
