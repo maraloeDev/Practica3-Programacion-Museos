@@ -1,0 +1,20 @@
+1- El nacimiento de Venus		Botticelli. 		Galería de los Uffizi, Florencia			NACIONALIDAD DEL AUTOR
+2- Balsa Muisca			 	Muiscas			Museo del Oro. Bogotá, Colombia				NACIONALIDAD DEL AUTOR
+3- La gran ola de Kanagawa		Katsushika Hokusai	The Metropolitan Museum of Art. Nueva York, EE.UU.	NACIONALIDAD DEL AUTOR
+4- El Almuerzo 				Velázquez		MUSEO DEL HERMITAGE DE SAN PETERSBURGO			NACIONALIDAD DEL AUTOR
+5- La lechera				Vermeer			Rijksmuseum, Amsterdam, Países Bajos.			NACIONALIDAD DEL AUTOR
+6- La ronda nocturna 			Rembrandt.		Rijksmuseum, Amsterdam, Países Bajos			NACIONALIDAD DEL AUTOR
+7- Neptuno y Tritón			Gian Lorenzo Bernini	Museo de Victoria y Alberto				NACIONALIDAD DEL AUTOR
+8- Lujo, calma y voluptuosidad		Henri Matisse		Museo de arte moderno Pompidur (Francia)		NACIONALIDAD DEL AUTOR
+9- Friends				Hanna Pauli		nationalmuseum de Estocolmo				NACIONALIDAD DEL AUTOR
+10-La dama con Liocorna			Rafael			Museo Borghese (Roma)					NACIONALIDAD DEL AUTOR
+11-Narciso				Caravaggio		Galería Nacional de Arte Antiguo(Italia)		NACIONALIDAD DEL AUTOR
+12-La batalla de Grünwald		Jan Matejko		Museo Nacional de Polonia				NACIONALIDAD DEL AUTOR
+13-La Mona Lisa a los 12 años		Fernando Botero		Museo Botero						NACIONALIDAD DEL AUTOR
+14-La habitación roja			Henri Matisse		Museo del Hermitage, San Petersburgo 			NACIONALIDAD DEL AUTOR
+15-Magdalena penitente			Tiziano			Museo del Hermitage en San Petersburgo			NACIONALIDAD DEL AUTOR
+16-hijo del hombre			René Magritte		Museo de Magritte, Bruselas				NACIONALIDAD DEL AUTOR
+17-La balsa de la Medusa		Théodore Géricault	Museo del Louvre (París, Francia) 			NACIONALIDAD DEL AUTOR
+18-Retrato de un médico			Greco			Museo del Prado, Madrid, España				NACIONALIDAD DEL AUTOR
+19-La noche estrellada sobre el Ródano	Van Gogh		Musée d'Orsay (Francia)					NACIONALIDAD DEL AUTOR
+20-El grito				Edvard Munch		Nacional de Noruega, Oslo, (Noruega)			NACIONALIDAD DEL AUTOR
