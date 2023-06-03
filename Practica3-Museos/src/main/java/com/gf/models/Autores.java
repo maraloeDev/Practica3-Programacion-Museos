@@ -10,7 +10,10 @@ public class Autores {
     private String nombre_autor;
     private int id_pais;
 
-    public Autores() {
+    public Autores(int id_autor, String nombre_autor, int id_pais) {
+        this.id_autor = id_autor;
+        this.nombre_autor = nombre_autor;
+        this.id_pais = id_pais;
     }
 
     public int getId_autor() {

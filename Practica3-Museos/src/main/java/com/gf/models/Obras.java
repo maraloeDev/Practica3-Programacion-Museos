@@ -13,7 +13,13 @@ public class Obras {
     private int id_muaeo;
     private int id_autor;
 
-    public Obras() {
+    public Obras(int id_obra, String nombre_obra, String descripcion_obra, String disciplina, int id_muaeo, int id_autor) {
+        this.id_obra = id_obra;
+        this.nombre_obra = nombre_obra;
+        this.descripcion_obra = descripcion_obra;
+        this.disciplina = disciplina;
+        this.id_muaeo = id_muaeo;
+        this.id_autor = id_autor;
     }
 
     public int getId_obra() {

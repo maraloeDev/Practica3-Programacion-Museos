@@ -10,7 +10,10 @@ public class Museos {
     private String nombre_museo;
     private int id_pais;
 
-    public Museos() {
+    public Museos(int id_museo, String nombre_museo, int id_pais) {
+        this.id_museo = id_museo;
+        this.nombre_museo = nombre_museo;
+        this.id_pais = id_pais;
     }
 
     public int getId_museo() {

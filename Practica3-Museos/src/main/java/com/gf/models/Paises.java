@@ -9,7 +9,9 @@ public class Paises {
     private int id_pais;
     private String nombre_pais;
 
-    public Paises() {
+    public Paises(int id_pais, String nombre_pais) {
+        this.id_pais = id_pais;
+        this.nombre_pais = nombre_pais;
     }
 
     public int getId_pais() {

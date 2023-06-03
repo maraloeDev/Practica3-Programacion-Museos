@@ -10,7 +10,10 @@ public class Ranking {
     public String nombre_jugador;
     public int puntos_Jugador;
 
-    public Ranking() {
+    public Ranking(int id_ranking, String nombre_jugador, int puntos_Jugador) {
+        this.id_ranking = id_ranking;
+        this.nombre_jugador = nombre_jugador;
+        this.puntos_Jugador = puntos_Jugador;
     }
 
     public int getId_ranking() {
