@@ -12,17 +12,16 @@ import javax.swing.JOptionPane;
  * @author Eduardo Martin-Sonseca
  */
 public class ConexionBD {
-    
+
     public static Connection conn;
     public static String url = "jdbc:mysql://localhost:3306/dim_gf";
     public static final String USER_SQL = "root";
     public static final String PASSWORD_SQL = "";
-    
+
     /*Metodo que sirve para conectarse con la base de datos utilizando el objeto 
     Connection y pasando los metodos estaticos desde la linea 17 a la 19 para
     la conexion*/
-    
-    public void conectarBD() { 
+    public static void conectarBD() {
         try {
             conn = DriverManager.getConnection(url, USER_SQL, PASSWORD_SQL);
             JOptionPane.showMessageDialog(null, "Base de datos conectada");
@@ -44,5 +43,9 @@ public class ConexionBD {
 
     public static Connection getConn() {
         return conn;
+    }
+    
+    public static void main(String[] args) {
+        conectarBD();
     }
 }
