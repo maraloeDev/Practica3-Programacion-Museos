@@ -15,71 +15,115 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author mario
  */
-public class DAO {
+public class Dao {
 
-    private ArrayList<Autores> autores = new ArrayList<>();
-    private ArrayList<Museos> museos = new ArrayList<>();
-    private ArrayList<Obras> obras = new ArrayList<>();
-    private ArrayList<Paises> paises = new ArrayList<>();
-    private ArrayList<Ranking> ranking = new ArrayList<>();
+    private List<Autores> listaAutores = new ArrayList<>();
+    private List<Museos> listaMuseos = new ArrayList<>();
+    private List<Obras> listaObras = new ArrayList<>();
+    private List<Paises> listaPaises = new ArrayList<>();
+    private List<Ranking> listaRanking = new ArrayList<>();
 
-    public DAO() throws SQLException {
+    public Dao() {
         ConexionBD conexion = new ConexionBD();
         conexion.conectarBD();
-        try (Connection conn = conexion.getConn();
-            Statement st = conn.createStatement()) {
+        try (Connection conn = conexion.getConn(); Statement st = conn.createStatement()) {
             ResultSet rs;
 
-            String sqlAutores = "SELECT * FROM autores;";
-            rs = st.executeQuery(sqlAutores);
-            while (rs.next()) {
-                autores.add(new Autores(rs.getInt("id_autor"),
-                        rs.getString("nombre_autor"),
-                        rs.getInt("id_pais")));
+            try {
+                String sqlAutores = "SELECT * FROM autores;";
+                rs = st.executeQuery(sqlAutores);
+                while (rs.next()) {
+                    listaAutores.add(new Autores(rs.getInt("id_autor"),
+                            rs.getString("nombre_autor"),
+                            rs.getInt("id_pais")));
+                }
+            } catch (SQLException e) {
+                System.out.println("Algo falló en la recuperación de datos de los autores");
             }
-            String sqlMuseos = "SELECT * FROM museos;";
-            rs = st.executeQuery(sqlMuseos);
-            while (rs.next()) {
-                museos.add(new Museos(rs.getInt("id_museo"),
-                        rs.getString("nombre_museo"),
-                        rs.getInt("id_pais")));
+            try {
+                String sqlMuseos = "SELECT * FROM museos;";
+                rs = st.executeQuery(sqlMuseos);
+                while (rs.next()) {
+                    listaMuseos.add(new Museos(rs.getInt("id_museo"),
+                            rs.getString("nombre_museo"),
+                            rs.getInt("id_pais"),
+                            rs.getBoolean("existe_museo")));
+                }
+
+            } catch (SQLException e) {
+                System.out.println("Algo falló en la recuperación de datos de los museos");
             }
-            String sqlObras = "SELECT * FROM obras;";
-            rs = st.executeQuery(sqlObras);
-            while (rs.next()) {
-                obras.add(new Obras(rs.getInt("id_obra"),
-                        rs.getString("nombre_obra"),
-                        rs.getString("descripcion_obra"),
-                        rs.getString("disciplina"),
-                        rs.getInt("id_muaeo"),
-                        rs.getInt("id_autor")));
+            try {
+                String sqlObras = "SELECT * FROM obras;";
+                rs = st.executeQuery(sqlObras);
+                while (rs.next()) {
+                    listaObras.add(new Obras(rs.getInt("id_obra"),
+                            rs.getString("nombre_obra"),
+                            rs.getString("descripcion_obra"),
+                            rs.getString("disciplina"),
+                            rs.getInt("id_muaeo"),
+                            rs.getInt("id_autor")));
+                }
+
+            } catch (SQLException e) {
+                System.out.println("Algo falló en la recuperación de datos de los obras");
             }
-            String sqlPaises = "SELECT * FROM paises;";
-            rs = st.executeQuery(sqlPaises);
-            while (rs.next()) {
-                paises.add(new Paises(rs.getInt("id_pais"),
-                        rs.getString("nombre_pais")));
+            try {
+                String sqlPaises = "SELECT * FROM paises;";
+                rs = st.executeQuery(sqlPaises);
+                while (rs.next()) {
+                    listaPaises.add(new Paises(rs.getInt("id_pais"),
+                            rs.getString("nombre_pais")));
+                }
+
+            } catch (SQLException e) {
+                System.out.println("Algo falló en la recuperación de datos de los paises");
             }
-            String sqlRanking = "SELECT * FROM ranking;";
-            rs = st.executeQuery(sqlRanking);
-            while (rs.next()) {
-                ranking.add(new Ranking(rs.getInt("id_ranking"),
-                        rs.getString("nombre_jugador"),
-                        rs.getInt("puntos_Jugador")));
+            try {
+                String sqlRanking = "SELECT * FROM ranking;";
+                rs = st.executeQuery(sqlRanking);
+                while (rs.next()) {
+                    listaRanking.add(new Ranking(rs.getInt("id_ranking"),
+                            rs.getString("nombre_jugador"),
+                            rs.getInt("puntos_Jugador")));
+                }
+
+            } catch (SQLException e) {
+                System.out.println("Algo falló en la recuperación de datos de los ranking");
             }
         } catch (SQLException e) {
             conexion.desconectarBD();
-            JOptionPane.showMessageDialog(null, "La conexion o la recuperacion de datos de la base de datos fallo.Por favor reinicie el programa");
+            JOptionPane.showMessageDialog(null, "La conexión o la recuperación de datos de la base de datos falló. Por favor reinicie el programa");
             System.out.println(e.getMessage());
-            throw e;
         } finally {
             conexion.desconectarBD();
         }
+    }
+
+    public List<Autores> getAutores() {
+        return (listaAutores);
+    }
+
+    public List<Museos> getMuseos() {
+        return (listaMuseos);
+    }
+
+    public List<Obras> getObras() {
+        return (listaObras);
+    }
+
+    public List<Paises> getPaises() {
+        return (listaPaises);
+    }
+
+    public List<Ranking> getRanking() {
+        return (listaRanking);
     }
 }

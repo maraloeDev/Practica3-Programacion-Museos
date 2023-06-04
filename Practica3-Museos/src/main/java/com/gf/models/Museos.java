@@ -5,12 +5,13 @@ package com.gf.models;
  * @author Eduardo Martin-Sonseca
  */
 public class Museos {
-/* Clase en general Orientada a objetos que referencia a la Entidad denomidada Museos*/
+    /* Clase en general Orientada a objetos que referencia a la Entidad denomidada Museos*/
     private int id_museo;
     private String nombre_museo;
     private int id_pais;
+    private boolean existe_museo;
 
-    public Museos(int id_museo, String nombre_museo, int id_pais) {
+    public Museos(int id_museo, String nombre_museo, int id_pais, boolean existe_museo) {
         this.id_museo = id_museo;
         this.nombre_museo = nombre_museo;
         this.id_pais = id_pais;
@@ -40,9 +41,17 @@ public class Museos {
         this.id_pais = id_pais;
     }
 
+    public boolean isExiste_museo() {
+        return existe_museo;
+    }
+
+    public void setExiste_museo(boolean existe_museo) {
+        this.existe_museo = existe_museo;
+    }
+
     @Override
     public String toString() {
-        return "id_museo " + id_museo + ", nombre_museo " + nombre_museo + ", id_pais " + id_pais;
+        return "id_museo=" + id_museo + ", nombre_museo=" + nombre_museo + ", id_pais=" + id_pais + ", existe_museo=" + existe_museo;
     }
 
 }
