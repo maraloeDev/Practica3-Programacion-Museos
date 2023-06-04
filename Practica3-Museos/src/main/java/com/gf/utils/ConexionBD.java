@@ -31,7 +31,7 @@ public class ConexionBD {
         }
     }
 
-    /*Metodo que sirve para cerrar la conexion con la base de datos*/
+    //Metodo que sirve para cerrar la conexion con la base de datos
     public void desconectarBD() {
         try {
             conn.close();
@@ -43,9 +43,5 @@ public class ConexionBD {
 
     public static Connection getConn() {
         return conn;
-    }
-    
-    public static void main(String[] args) {
-        conectarBD();
     }
 }

@@ -6,7 +6,7 @@ package com.gf.controls;
 
 /**
  *
- * @author Eduardo Martin-Sonseca Mario Ortuñez
+ * @author Mario Ortuñez Sanz
  */
 public class hacer {
     

@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author mario
+ * @author Mario Ortuñez Sanz
  */
 public class DAO {
 
@@ -31,9 +31,8 @@ public class DAO {
 
     public DAO() throws SQLException {
         ConexionBD conexion = new ConexionBD();
-        conexion.conectarBD();
-        try (Connection conn = conexion.getConn();
-            Statement st = conn.createStatement()) {
+        ConexionBD.conectarBD();
+        try (Connection conn = ConexionBD.getConn(); Statement st = conn.createStatement()) {
             ResultSet rs;
 
             String sqlAutores = "SELECT * FROM autores;";

@@ -16,6 +16,10 @@ public class GUIPrincipal extends javax.swing.JFrame {
     public GUIPrincipal() {
         initComponents();
     }
+    private void setFrame(){
+        this.setLocationRelativeTo(null);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
