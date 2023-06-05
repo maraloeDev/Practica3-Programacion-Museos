@@ -5,7 +5,10 @@
 package com.gf.controles;
 
 import com.gf.dao.Dao;
+import com.gf.modelos.Autores;
+import com.gf.modelos.Museos;
 import com.gf.modelos.Obras;
+import com.gf.modelos.Paises;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,80 +17,84 @@ import java.util.List;
  * @author Mario Ortuñez
  *
  * Clase del primer juego
- * 
- * Enunciado:
- * 1. ¿Quién lo hizo? A partir de unas imágenes de obras de arte genéricas, hay
- * que adivinar su autor
  *
- * Lógica:
- * Tenemos una variable que nos guardara una lista de las obras que apareceran en el jueg.
- * 
- * Para rellenarla segun se crea el objeto (por eso es crea da en el constructor) recorro un 
- * for 10 veces (debido a que el jeugo tiene 10 obras distintas),en el saco un numero aleatorio 
- * entre 1 y el numero total de obras guardadas, y despues de comprobar que no fue seleccionado
- * ese numero antes (para que no se repita), con ese numero cogemos la obra que caiga segun se 
- * guardada, con el indice siendo el numero aleatorio, y finalmente la añadimos a la lista.
- * 
- * Una vez con la lista llena, tengo metodos para retornar la propia lista, el nombre de las
- * obras y las urls de las imagenes de las obras.
- * 
- * Estos dos ultimos metodos son parecidos, debido a que recojo cada nombre o url en una lista y 
- * retorno esta
- * 
+ * Enunciado: 1. ¿Quién lo hizo? A partir de unas imágenes de obras de arte
+ * genéricas, hay que adivinar su autor
+ *
+ *
+ * Lógica: Esta clase representa el juego en el que se debe adivinar el autor de
+ * una obra de arte a partir de imágenes genéricas. Al crear un objeto de esta
+ * clase, se genera una lista de obras que aparecerán en el juego.
+ *
+ * En el constructor, se recorre un bucle 10 veces para seleccionar obras
+ * aleatorias. En cada iteración, se genera un número aleatorio entre 1 y el
+ * número total de obras disponibles. Se verifica que el número no haya sido
+ * seleccionado previamente para evitar repeticiones. Utilizando el número
+ * aleatorio como índice, se obtiene la obra correspondiente de la lista de
+ * obras y se agrega a la lista del juego.
+ *
+ * Una vez que la lista está llena, se proporcionan métodos para obtener la
+ * lista de obras, los nombres de las obras y las URLs de las imágenes de las
+ * obras y los autores de las obras. Los últimos tres métodos recopilan los
+ * nombres de las obras y de los autores, ademas de las URLs en listas separadas
+ * y las devuelven como resultado.
+ *
  */
 public class Juego1 {
 
-    // Atributos
-    private List<Obras> obras = new ArrayList<>();// Variable que guarda las obras que apareceran en el juego
+    private final List<Obras> obras = new ArrayList<>(); // Variable que guarda las obras que aparecerán en el juego
 
-    // Constructor
     public Juego1(Dao dao) {
+        List<Integer> obrasSeleccionadas = new ArrayList<>(); // Variable para guardar las ids de las obras que ya han sido seleccionadas
+        int numeroObrasJuego = 10;
 
-        // Variables
-        List<Integer> aleatoriosSel = new ArrayList<>();// Variable para que guarde las ids de las obras que ya hayan sido seleccionadas
-        int aleatorio = 0;// Variable para sacra una numero aleatorio de las obras que haya
+        for (int i = 0; i < numeroObrasJuego; i++) { // Generar las obras seleccionadas
+            int aleatorio;
+            do {
+                aleatorio = (int) (Math.random() * dao.getObras().size()); // Generar un número aleatorio entre 0 y el tamaño de la lista de obras - 1
+            } while (ControlJuegos.idRepetida(obrasSeleccionadas, aleatorio)); // Verificar si el índice ya ha sido seleccionado
 
-        // Instrucciones
-        for (int i = 0; i < 10; i++) {// Bucle for para rellenar con las 10 obras
-            do {// Bucle do while para hacer que repita la accion de sacar una aleatorio mientras no se haya escogido antes
-                aleatorio = (int) (Math.random() * (dao.getObras().size() - 1) + 1);
-            } while (ControlJuegos.idRepetida(aleatoriosSel, aleatorio));// LLamamos al metodo idRepetido que devuelve un voleano si esta repetido(true si lo esta)
-            this.obras.add(dao.getObras().get(aleatorio));// si no lo esta lo añadimos a las obras
-            aleatoriosSel.add(aleatorio);// Y guardanmos el aleatorio
+            obras.add(dao.getObras().get(aleatorio)); // Añadir la obra seleccionada a la lista de obras del juego
+            obrasSeleccionadas.add(aleatorio); // Guardar el índice de la obra seleccionada
         }
-
     }
 
-    // Getter de las obras
     public List<Obras> getObras() {
         return obras;
     }
-    
-    // Metodo que devuelve el nombre de las obras
-    public List<String> nombreImg() {
 
-        // Variable
-        List<String> nombres = new ArrayList<>();// Variable para la almacenacion de los nombres
-
-        // Instrucciones
-        for (int i = 0; i < obras.size(); i++) {// Bucle for para recorrer todas las obras
-            nombres.add(obras.get(i).getNombre_obra());// Las guardamos en la lista de nombres
+    public List<String> nombreObras() {
+        List<String> nombres = new ArrayList<>();
+        for (Obras obra : obras) {
+            nombres.add(obra.getNombre_obra());
         }
-
-        return nombres;// Retornamos la lista de los nombres
+        return nombres;
     }
 
-    // Metodo que devuelve el nombre de las obras
     public List<String> urlImg() {
-
-        // Variable
-        List<String> urls = new ArrayList<>();// Variable para la almacenacion de las urls
-
-        // Instrucciones
-        for (int i = 0; i < obras.size(); i++) {// Bucle for para recorrer todas las obras
-            urls.add(obras.get(i).getDescripcion_obra());// Las guardamos en la lista de urls
+        List<String> urls = new ArrayList<>();
+        for (Obras obra : obras) {
+            urls.add(obra.getDescripcion_obra());
         }
+        return urls;
+    }
 
-        return urls;// Retornamos la lista de los urls
+    // Lista de los países donde se encuentran las obras del juego 4 mediante su museo.
+    public List<String> autoresObra(Dao dao) throws NullPointerException {
+        List<String> autores = new ArrayList<>();
+        for (Obras obra : obras) {
+            try {
+                for (Autores autor : dao.getAutores()) {// Buscamos entre todos los autores cual tiene la id correspondiente
+                    if (autor.getId_autor() == obra.getId_autor()) {
+                        autores.add(autor.getNombre_autor());// Añadimos a la lista
+                        break;
+                    }
+                }
+            } catch (NullPointerException e) {// Controlamos la excepcion
+                System.out.println("No se pudo encontrar el autor de la obra.");
+                throw e;
+            }
+        }
+        return autores;
     }
 }

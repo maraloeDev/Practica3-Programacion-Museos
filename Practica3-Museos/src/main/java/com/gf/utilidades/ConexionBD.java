@@ -32,7 +32,7 @@ public class ConexionBD {
     }
 
     //Metodo que sirve para cerrar la conexion con la base de datos
-    public void desconectarBD() {
+    public static void desconectarBD() {
         try {
             conn.close();
             JOptionPane.showMessageDialog(null, "Te has desconectado de la base de datos");
