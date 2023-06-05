@@ -5,14 +5,15 @@ package com.gf.models;
  * @author Eduardo Martin-Sonseca
  */
 public class Obras {
-/* Clase en general Orientada a objetos que referencia a la Entidad denomidada Obras*/
+    // Atributos
     private int id_obra;
     private String nombre_obra;
     private String descripcion_obra;
     private String disciplina;
     private int id_muaeo;
     private int id_autor;
-
+    
+    // Constructores
     public Obras(int id_obra, String nombre_obra, String descripcion_obra, String disciplina, int id_muaeo, int id_autor) {
         this.id_obra = id_obra;
         this.nombre_obra = nombre_obra;
@@ -21,7 +22,8 @@ public class Obras {
         this.id_muaeo = id_muaeo;
         this.id_autor = id_autor;
     }
-
+    
+    // Metodos Getter y Setter
     public int getId_obra() {
         return id_obra;
     }
@@ -69,7 +71,8 @@ public class Obras {
     public void setId_autor(int id_autor) {
         this.id_autor = id_autor;
     }
-
+    
+    // Metodo toString
     @Override
     public String toString() {
         return "id_obra " + id_obra
