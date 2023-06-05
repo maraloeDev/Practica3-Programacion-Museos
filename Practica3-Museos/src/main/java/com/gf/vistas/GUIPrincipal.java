@@ -17,7 +17,7 @@ public class GUIPrincipal extends javax.swing.JFrame {
         initComponents();
     }
     private void setFrame(){
-        this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null); //
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
