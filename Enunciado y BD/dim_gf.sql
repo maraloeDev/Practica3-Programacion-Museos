@@ -110,7 +110,28 @@ INSERT INTO `museos` (`id_museo`, `nombre_museo`, `id_pais`) VALUES
 (17 , 'Museo del Louvre', 6 ),
 (18 , 'Museo del Prado', 18),
 (19 , 'Musée d Orsay', 5 ),
-(20 , 'Nacional de Noruega', 12);
+(20 , 'Nacional de Noruega', 11),
+
+(21 , 'Museo de las Maravillas Extraterrestres', 12),
+(22 , 'Museo de las Profecías Antiguas', 12),
+(23 , 'Museo de Arte Holográfico', 12),
+(24 , 'Museo de los Sueños Perdidos', 12),
+(25 , 'Museo de los Secretos Ocultos', 12),
+(26 , 'Museo de la Imaginación Desbordante', 12),
+(27 , 'Museo de los Viajes en el Tiempo', 12),
+(28 , 'Museo de Arte Interdimensional', 12),
+(29 , 'Museo de las Criaturas Mitológicas', 12),
+(30 , 'Museo de la Tecnología Futurista', 12),
+(31 , 'Museo de los Enigmas de la Historia', 12),
+(32 , 'Museo de Arte Fantástico', 12),
+(33 , 'Museo de las Leyendas Urbanas', 12),
+(34 , 'Museo de los Tesoros Perdidos', 12),
+(35 , 'Museo de los Inventos Imposibles', 12),
+(36 , 'Museo de Arte Surrealista Cósmico', 12),
+(37 , 'Museo de las Reliquias Mágicas', 12),
+(38 , 'Museo de las Especies Extintas Fantásticas', 12),
+(39 , 'Museo de los Enigmas Extraterrestres', 12),
+(40 , 'Museo de Arte Psicodélico del Futuro', 12);
 
 -- --------------------------------------------------------
 
@@ -198,7 +219,8 @@ INSERT INTO `paises` (`id_pais`, `nombre_pais`) VALUES
 (8 , 'Colombia'),
 (9 , 'Belgica'),
 (10, 'Grecia'),
-(11 , 'Noruega');
+(11 , 'Noruega'),
+(12 , '');
 
 -- --------------------------------------------------------
 
