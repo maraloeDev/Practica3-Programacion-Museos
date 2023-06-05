@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.gf.controls;
+package com.gf.controles;
 
-import com.gf.models.Obras;
+import com.gf.modeles.Obras;
 
 /**
  *
@@ -17,15 +17,8 @@ import com.gf.models.Obras;
 public class Juego4 {
 
     private Obras obra1;
-    private Obras obra2;
-    private Obras obra3;
-    private Obras obra4;
 
     public Juego4() {
-        this.obra1 = obra1;
-        this.obra2 = obra2;
-        this.obra3 = obra3;
-        this.obra4 = obra4;
     }
     
     

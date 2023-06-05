@@ -1,4 +1,4 @@
-package com.gf.models;
+package com.gf.modeles;
 
 /**
  *
@@ -14,6 +14,10 @@ public class Autores {
         this.id_autor = id_autor;
         this.nombre_autor = nombre_autor;
         this.id_pais = id_pais;
+    }
+
+    public Autores() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public int getId_autor() {

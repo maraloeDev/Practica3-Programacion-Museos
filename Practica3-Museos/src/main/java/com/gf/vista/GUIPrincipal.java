@@ -1,4 +1,4 @@
-package com.gf.views;
+package com.gf.vista;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;

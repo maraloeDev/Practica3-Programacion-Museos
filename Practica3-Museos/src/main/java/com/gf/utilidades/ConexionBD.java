@@ -1,4 +1,4 @@
-package com.gf.utils;
+package com.gf.utilidades;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

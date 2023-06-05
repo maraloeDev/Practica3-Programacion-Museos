@@ -4,12 +4,12 @@
  */
 package com.gf.dao;
 
-import com.gf.models.Autores;
-import com.gf.models.Museos;
-import com.gf.models.Obras;
-import com.gf.models.Paises;
-import com.gf.models.Ranking;
-import com.gf.utils.ConexionBD;
+import com.gf.modeles.Autores;
+import com.gf.modeles.Museos;
+import com.gf.modeles.Obras;
+import com.gf.modeles.Paises;
+import com.gf.modeles.Ranking;
+import com.gf.utilidades.ConexionBD;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

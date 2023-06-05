@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.gf.controls;
+package com.gf.controles;
 
 import com.gf.dao.Dao;
-import com.gf.models.Obras;
+import com.gf.modeles.Obras;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +19,21 @@ import java.util.List;
  * 1. ¿Quién lo hizo? A partir de unas imágenes de obras de arte genéricas, hay
  * que adivinar su autor
  *
+ * Lógica:
+ * Tenemos una variable que nos guardara una lista de las obras que apareceran en el jueg.
+ * 
+ * Para rellenarla segun se crea el objeto (por eso es crea da en el constructor) recorro un 
+ * for 10 veces (debido a que el jeugo tiene 10 obras distintas),en el saco un numero aleatorio 
+ * entre 1 y el numero total de obras guardadas, y despues de comprobar que no fue seleccionado
+ * ese numero antes (para que no se repita), con ese numero cogemos la obra que caiga segun se 
+ * guardada, con el indice siendo el numero aleatorio, y finalmente la añadimos a la lista.
+ * 
+ * Una vez con la lista llena, tengo metodos para retornar la propia lista, el nombre de las
+ * obras y las urls de las imagenes de las obras.
+ * 
+ * Estos dos ultimos metodos son parecidos, debido a que recojo cada nombre o url en una lista y 
+ * retorno esta
+ * 
  */
 public class Juego1 {
 
@@ -51,7 +66,7 @@ public class Juego1 {
     // Metodo que devuelve el nombre de las obras
     public List<String> nombreImg() {
 
-        // Variables
+        // Variable
         List<String> nombres = new ArrayList<>();// Variable para la almacenacion de los nombres
 
         // Instrucciones
@@ -65,7 +80,7 @@ public class Juego1 {
     // Metodo que devuelve el nombre de las obras
     public List<String> urlImg() {
 
-        // Variables
+        // Variable
         List<String> urls = new ArrayList<>();// Variable para la almacenacion de las urls
 
         // Instrucciones
