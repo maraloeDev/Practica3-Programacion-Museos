@@ -4,12 +4,12 @@
  */
 package com.gf.controles;
 
-import com.gf.modeles.Autores;
+import com.gf.modelos.Autores;
 import java.util.List;
 
 /**
  *
- * @author Eduardo Martin-Sonseca Mario Ortuñez
+ * @author Mario Ortuñez
  */
 public class ControlJuegos {
 

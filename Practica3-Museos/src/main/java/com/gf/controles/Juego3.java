@@ -5,14 +5,14 @@
 package com.gf.controles;
 
 import com.gf.dao.Dao;
-import com.gf.modeles.Autores;
-import com.gf.modeles.Obras;
+import com.gf.modelos.Autores;
+import com.gf.modelos.Obras;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
- * @author Eduardo Martin-Sonseca Mario Ortuñez
+ * @author Mario Ortuñez
  *
  * 3. Gregorio Fernández. El usuario tiene que adivinar cual de dos imágenes de
  * esculturas planteadas, corresponde su autoría a Gregorio Fernández

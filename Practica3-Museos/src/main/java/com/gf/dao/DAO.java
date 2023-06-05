@@ -4,11 +4,11 @@
  */
 package com.gf.dao;
 
-import com.gf.modeles.Autores;
-import com.gf.modeles.Museos;
-import com.gf.modeles.Obras;
-import com.gf.modeles.Paises;
-import com.gf.modeles.Ranking;
+import com.gf.modelos.Autores;
+import com.gf.modelos.Museos;
+import com.gf.modelos.Obras;
+import com.gf.modelos.Paises;
+import com.gf.modelos.Ranking;
 import com.gf.utilidades.ConexionBD;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author mario
+ * @author Mario Ortuñez
  */
 public class Dao {
 

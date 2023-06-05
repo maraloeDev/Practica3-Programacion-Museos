@@ -5,13 +5,13 @@
 package com.gf.controles;
 
 import com.gf.dao.Dao;
-import com.gf.modeles.Obras;
+import com.gf.modelos.Obras;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
- * @author Eduardo Martin-Sonseca y Mario Ortuñez
+ * @author Mario Ortuñez
  *
  * Clase del primer juego
  * 

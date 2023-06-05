@@ -4,11 +4,11 @@
  */
 package com.gf.controles;
 
-import com.gf.modeles.Obras;
+import com.gf.modelos.Obras;
 
 /**
  *
- * @author Eduardo Martin-Sonseca Mario Ortuñez
+ * @author Mario Ortuñez
  * 
  * 4. Coloca en el mapa.
  * El usuario tiene que colocar en un mapa europeo obras de arte

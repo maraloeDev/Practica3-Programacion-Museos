@@ -5,13 +5,13 @@
 package com.gf.controles;
 
 import com.gf.dao.Dao;
-import com.gf.modeles.Museos;
+import com.gf.modelos.Museos;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
- * @author Eduardo Martin-Sonseca Mario Ortuñez
+ * @author Mario Ortuñez
  *
  * Clase del segundo juego
  *

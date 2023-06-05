@@ -1,4 +1,4 @@
-package com.gf.modeles;
+package com.gf.modelos;
 
 /**
  *
