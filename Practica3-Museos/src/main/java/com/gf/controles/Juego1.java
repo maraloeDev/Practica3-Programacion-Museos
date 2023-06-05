@@ -6,9 +6,7 @@ package com.gf.controles;
 
 import com.gf.dao.Dao;
 import com.gf.modelos.Autores;
-import com.gf.modelos.Museos;
 import com.gf.modelos.Obras;
-import com.gf.modelos.Paises;
 import java.util.ArrayList;
 import java.util.List;
 

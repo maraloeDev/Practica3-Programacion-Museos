@@ -70,7 +70,7 @@ public class Juego4 {
         for (Obras obra : obras) {
             try {
                 for (Museos museo : dao.getMuseos()) {// Buscamos entre todos los museos cual tiene la id correspondiente
-                    if (museo.getId_museo() == obra.getId_muaeo()){
+                    if (museo.getId_museo() == obra.getId_muaeo()) {
                         museoObra = museo;
                         break;
                     }
