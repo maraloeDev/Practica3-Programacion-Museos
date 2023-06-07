@@ -5,6 +5,7 @@ package com.gf.modelos;
  * @author Eduardo Martin-Sonseca
  */
 public class Obras {
+    
     // Atributos
     private int id_obra;
     private String nombre_obra;

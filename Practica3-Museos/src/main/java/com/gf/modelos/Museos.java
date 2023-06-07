@@ -12,14 +12,14 @@ public class Museos {
     private int id_pais;
     private boolean existe_museo;
     
-      // Constructor
+    // Constructor
     public Museos(int id_museo, String nombre_museo, int id_pais, boolean existe_museo) {
         this.id_museo = id_museo;
         this.nombre_museo = nombre_museo;
         this.id_pais = id_pais;
     }
     
-    // Getter and Setter
+    // Metodos Getter y Setter
     public int getId_museo() {
         return id_museo;
     }

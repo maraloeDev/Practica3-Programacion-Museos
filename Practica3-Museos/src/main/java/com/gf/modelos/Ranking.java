@@ -5,6 +5,7 @@ package com.gf.modelos;
  * @author Eduardo Martin-Sonseca
  */
 public class Ranking {
+    
     // Atributos
     public int id_ranking;
     public String nombre_jugador;
@@ -16,6 +17,7 @@ public class Ranking {
         this.nombre_jugador = nombre_jugador;
         this.puntos_Jugador = puntos_Jugador;
     }
+    
     // Metodos Getter y Setter
     public int getId_ranking() {
         return id_ranking;

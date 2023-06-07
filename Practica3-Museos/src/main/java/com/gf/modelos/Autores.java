@@ -5,17 +5,20 @@ package com.gf.modelos;
  * @author Eduardo Martin-Sonseca
  */
 public class Autores {
-/* Clase en general Orientada a objetos que referencia a la Entidad denomidada Autores*/
+    
+    // Atributos
     private int id_autor;
     private String nombre_autor;
     private int id_pais;
-
+    
+    // Constructores
     public Autores(int id_autor, String nombre_autor, int id_pais) {
         this.id_autor = id_autor;
         this.nombre_autor = nombre_autor;
         this.id_pais = id_pais;
     }
-
+    
+    // Metodos Getter y Setter
     public Autores() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
@@ -44,6 +47,7 @@ public class Autores {
         this.id_pais = id_pais;
     }
 
+    // Metodo toString
     @Override
     public String toString() {
         return "id_autor " + id_autor + ", nombre_autor " + nombre_autor + ", id_pais " + id_pais;
