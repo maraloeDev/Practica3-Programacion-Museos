@@ -24,7 +24,6 @@ public class ConexionBD {
     public static void conectarBD() {
         try {
             conn = DriverManager.getConnection(url, USER_SQL, PASSWORD_SQL);
-            JOptionPane.showMessageDialog(null, "Base de datos conectada");
         } catch (SQLException ex) {
             Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Base de datos no conectada");
@@ -35,13 +34,13 @@ public class ConexionBD {
     public static void desconectarBD() {
         try {
             conn.close();
-            JOptionPane.showMessageDialog(null, "Te has desconectado de la base de datos");
         } catch (SQLException ex) {
             Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public static Connection getConn() {
+        conectarBD();
         return conn;
     }
 }
