@@ -48,11 +48,10 @@ public class Dao {
     private List<Ranking> listaRanking = new ArrayList<>(); // Almacena la lista de puntuaciones del ranking
 
     public Dao() {
-        Connection conn = ConexionBD.getConn();
 
-        try ( Statement st = conn.createStatement()) {
+        try (Connection conn = ConexionBD.getConn()) {
+            Statement st = conn.createStatement();
             ResultSet rs;
-
             // Rellenamos las listas con los datos de la base de datos
             try {
                 String sqlAutores = "SELECT * FROM autores;";
@@ -89,9 +88,9 @@ public class Dao {
                 while (rs.next()) {
                     listaObras.add(new Obras(rs.getInt("id_obra"),
                             rs.getString("nombre_obra"),
-                            rs.getString("descripcion_obra"),
+                            rs.getString("descripción_obra"),
                             rs.getString("disciplina"),
-                            rs.getInt("id_muaeo"),
+                            rs.getInt("id_museo"),
                             rs.getInt("id_autor")));
                 }
 
@@ -127,7 +126,7 @@ public class Dao {
                 System.out.println(e.getMessage());
             }
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "La conexión o la recuperación de datos de la base de datos falló. Por favor reinicie el programa");
             System.out.println("La conexión o la recuperación de datos de la base de datos falló. Por favor reinicie el programa");
             System.out.println(e.getMessage());

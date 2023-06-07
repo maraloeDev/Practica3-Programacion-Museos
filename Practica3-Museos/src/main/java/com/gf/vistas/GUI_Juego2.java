@@ -4,17 +4,40 @@
  */
 package com.gf.vistas;
 
+import com.gf.controles.Juego2;
+import com.gf.dao.Dao;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JCheckBox;
+
 /**
  *
  * @author Eduardo
  */
 public class GUI_Juego2 extends javax.swing.JFrame {
 
+    private static Dao dao = new Dao();
+    private static Juego2 juego2 = new Juego2(dao);
+
     /**
      * Creates new form GUI_Juego2
      */
     public GUI_Juego2() {
         initComponents();
+        setFrame();
+        controles();
+    }
+
+    private void setFrame() {
+        this.setTitle("Verdadero/Falso de Museos");
+        
+    }
+    private void controles(){
+        //Recorro los 
+        for (String nombreMuseo : juego2.getNombresMuseos()) {
+            JCheckBox museos = new JCheckBox("" + nombreMuseo);
+            this.add(museos);
+        }
     }
 
     /**
@@ -32,11 +55,11 @@ public class GUI_Juego2 extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 626, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 462, Short.MAX_VALUE)
         );
 
         pack();

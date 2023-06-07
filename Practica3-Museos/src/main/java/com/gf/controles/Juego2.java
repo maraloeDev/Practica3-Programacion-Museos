@@ -58,7 +58,7 @@ public class Juego2 {
         }
 
         // Generar los 10 museos del juego
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i <= 10; i++) {
             int aleatorio = (int) (Math.random() * 2); // Generar 0 o 1 para decidir si el museo será verdadero o falso
 
             if (aleatorio == 0 || contMuseosReal <= 3) { // Si aleatorio es 0 o hay 3 o menos museos verdaderos
@@ -88,11 +88,12 @@ public class Juego2 {
         return nombres;
     }
 
-    private Museos obtenerMuseoAleatorioSinRepetir(List<Museos> museos) {
-        int aleatorio;
-        do {
-            aleatorio = (int) (Math.random() * museos.size());
-        } while (museos.get(aleatorio) == null);
+    public static Museos obtenerMuseoAleatorioSinRepetir(List<Museos> museos) {
+        int aleatorio =(int) (Math.random() * museos.size());
+       
+       while (museos.get(aleatorio) == null){
+           aleatorio =(int) (Math.random() * museos.size());
+    }
         Museos museoSeleccionado = museos.get(aleatorio);
         museos.set(aleatorio, null); // Marcamos el museo seleccionado como nulo para evitar seleccionarlo nuevamente
         return museoSeleccionado;
