@@ -89,9 +89,9 @@ public class Dao {
                 while (rs.next()) {
                     listaObras.add(new Obras(rs.getInt("id_obra"),
                             rs.getString("nombre_obra"),
-                            rs.getString("descripcion_obra"),
+                            rs.getString("descripción_obra"),
                             rs.getString("disciplina"),
-                            rs.getInt("id_muaeo"),
+                            rs.getInt("id_museo"),
                             rs.getInt("id_autor")));
                 }
 

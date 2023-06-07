@@ -6,9 +6,9 @@ package com.gf.vistas;
 
 import com.gf.controles.Juego2;
 import com.gf.dao.Dao;
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.GridLayout;
 import javax.swing.JCheckBox;
+import javax.swing.JPanel;
 
 /**
  *
@@ -16,8 +16,9 @@ import javax.swing.JCheckBox;
  */
 public class GUI_Juego2 extends javax.swing.JFrame {
 
-    private static Dao dao = new Dao();
-    private static Juego2 juego2 = new Juego2(dao);
+    private static final Dao dao = new Dao();
+    private static final Juego2 juego2 = new Juego2(dao);
+    static JPanel panelContenedor = new JPanel(new GridLayout(0,1));
 
     /**
      * Creates new form GUI_Juego2
@@ -30,13 +31,15 @@ public class GUI_Juego2 extends javax.swing.JFrame {
 
     private void setFrame() {
         this.setTitle("Verdadero/Falso de Museos");
-        
+        this.setContentPane(panelContenedor);
+        this.setLocationRelativeTo(null);
     }
-    private void controles(){
-        //Recorro los 
-        for (String nombreMuseo : juego2.getNombresMuseos()) {
-            JCheckBox museos = new JCheckBox("" + nombreMuseo);
-            this.add(museos);
+
+    private void controles() {
+        //Recorro el nombre de los museos
+        for (String museosV : juego2.getNombresMuseos()) {
+            JCheckBox museosVerdaderos = new JCheckBox(museosV);
+            panelContenedor.add(museosVerdaderos);
         }
     }
 

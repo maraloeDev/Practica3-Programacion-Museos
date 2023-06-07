@@ -42,8 +42,8 @@ public class Juego2 {
     public Juego2(Dao dao) {
         List<Museos> museosFalsos = new ArrayList<>(); // Variable para almacenar los museos falsos
         List<Museos> museosVerdaderos = new ArrayList<>(); // Variable para almacenar los museos verdaderos
-        int nMuseosReales = 3; // Contador de museos verdaderos
-        int nMuseosNoReales = 7; // Contador de museos falsos
+//        int nMuseosReales = 3; // Contador de museos verdaderos
+//        int nMuseosNoReales = 7; // Contador de museos falsos
 
         // Separar los museos en verdaderos y falsos
         for (Museos museo : dao.getMuseos()) {
@@ -57,18 +57,27 @@ public class Juego2 {
         //Desordenamos las listas
         Collections.shuffle(museosFalsos);
         Collections.shuffle(museosVerdaderos);
+        
+        /*Se tomará la cantidad mínima entre 3 y el tamaño de museosVerdaderos, evitando así el error si hay menos de 3 museos verdaderos.*/
+        museos.addAll(museosVerdaderos.subList(0, Math.min(3, museosVerdaderos.size())));
+        museosExistentes.addAll(museosVerdaderos.subList(0, Math.min(3, museosVerdaderos.size())));
+        museos.addAll(museosFalsos.subList(0, 7));
 
-        //Añadimos los museos
-        for (int i = 0; i < nMuseosReales; i++) {
-            museos.add(museosVerdaderos.get(i));
-            museosExistentes.add(museosVerdaderos.get(i));
-        }
-        for (int i = 0; i < nMuseosNoReales; i++) {
-            museos.add(museosFalsos.get(i));
-        }
+        Collections.shuffle(museos);
 
-        Collections.shuffle(museos);// Y desordenamos
-
+//        //Añadimos los museos
+//        for (int i = 0; i < 10; i++) {
+//    museos.add(museosVerdaderos.get(i));
+//    museosExistentes.add(museosVerdaderos.get(i));
+//}
+//
+//for (int j = 0; j < 7; j++) {
+//    museos.add(museosFalsos.get(j));
+//}
+//
+//
+//        Collections.shuffle(museos);// Y desordenamos
+//
     }
 
     public List<Museos> getMuseos() {
