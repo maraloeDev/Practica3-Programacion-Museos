@@ -31,7 +31,8 @@ import java.util.List;
  * La clase Juego3 también proporciona métodos para obtener las obras del juego,
  * las obras del Gregorio Fernández, los nombres de las obras y las URLs de las
  * imágenes de las obras. Además, tenemos un método para determinar si la imagen
- * verdadera estará a la izquierda ('i') o derecha ('d').
+ * verdadera estará a la izquierda ('i') o derecha ('d'). Por ultimo el metodo
+ * para seleccionar las obras del Gregorio Fernandez
  *
  */
 public class Juego3 {
@@ -43,7 +44,7 @@ public class Juego3 {
         List<Obras> obrasGFLista = new ArrayList<>(); // Obras del Gregorio Fernández
         List<Obras> obrasNoLista = new ArrayList<>(); // Obras que no son del Gregorio Fernández
         List<Autores> autoresLista = dao.getAutores();
-        Autores GF = ControlJuegos.seleccionarGF(autoresLista); // Buscar al Gregorio Fernández entre los autores
+        Autores GF = seleccionarGF(autoresLista); // Buscar al Gregorio Fernández entre los autores
         List<Integer> indicesAleatorios = new ArrayList<>(); // Variable para guardar los indices de la lista aleatorios
         int cantidadObras = 6; // Variable para la cantidad de obras del juego
 
@@ -125,5 +126,25 @@ public class Juego3 {
         }
 
         return verdaderas;
+    }
+
+    // Buscar obras del Gregorio Fernandez
+    public static Autores seleccionarGF(List<Autores> autoresLista) throws Exception {
+        Autores GF = null;
+        try {
+            for (Autores autor : autoresLista) {
+                if (autor.getNombre_autor().equals("Gregorio Fernandez")) {
+                    GF = autor;
+                    break;
+                }
+            }
+            if (GF == null) {
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            System.out.println("Algo sucedio y no se pudo encontrar entre los autores a Gregorio Fernandez");
+            throw e;
+        }
+        return GF;
     }
 }
