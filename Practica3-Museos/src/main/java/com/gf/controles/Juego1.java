@@ -8,6 +8,7 @@ import com.gf.dao.Dao;
 import com.gf.modelos.Autores;
 import com.gf.modelos.Obras;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -24,12 +25,8 @@ import java.util.List;
  * una obra de arte a partir de imágenes genéricas. Al crear un objeto de esta
  * clase, se genera una lista de obras que aparecerán en el juego.
  *
- * En el constructor, se recorre un bucle 10 veces para seleccionar obras
- * aleatorias. En cada iteración, se genera un número aleatorio entre 1 y el
- * número total de obras disponibles. Se verifica que el número no haya sido
- * seleccionado previamente para evitar repeticiones. Utilizando el número
- * aleatorio como índice, se obtiene la obra correspondiente de la lista de
- * obras y se agrega a la lista del juego.
+ * En el constructor, recogemos todas las obras, las desordenamos y la guardamos
+ * en el atributo
  *
  * Una vez que la lista está llena, se proporcionan métodos para obtener la
  * lista de obras, los nombres de las obras y las URLs de las imágenes de las
@@ -43,17 +40,12 @@ public class Juego1 {
     private final List<Obras> obras = new ArrayList<>(); // Variable que guarda las obras que aparecerán en el juego
 
     public Juego1(Dao dao) {
-        List<Integer> obrasSeleccionadas = new ArrayList<>(); // Variable para guardar las ids de las obras que ya han sido seleccionadas
+        List<Obras> obrasTodas = dao.getObras(); // Variable donde guardamos todas las obras
         int numeroObrasJuego = 10;
 
-        for (int i = 0; i < numeroObrasJuego; i++) { // Generar las obras seleccionadas
-            int aleatorio;
-            do {
-                aleatorio = (int) (Math.random() * dao.getObras().size()); // Generar un número aleatorio entre 0 y el tamaño de la lista de obras - 1
-            } while (ControlJuegos.idRepetida(obrasSeleccionadas, aleatorio)); // Verificar si el índice ya ha sido seleccionado
-
-            obras.add(dao.getObras().get(aleatorio)); // Añadir la obra seleccionada a la lista de obras del juego
-            obrasSeleccionadas.add(aleatorio); // Guardar el índice de la obra seleccionada
+        Collections.shuffle(obrasTodas);//Desordenamos
+        for (int i = 0; i < numeroObrasJuego; i++) {
+            obras.add(obrasTodas.get(i)); // Añadimos a la lista las 10 del juego
         }
     }
 

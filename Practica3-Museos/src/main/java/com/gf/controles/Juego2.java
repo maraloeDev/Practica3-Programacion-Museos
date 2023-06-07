@@ -7,6 +7,7 @@ package com.gf.controles;
 import com.gf.dao.Dao;
 import com.gf.modelos.Museos;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -18,19 +19,14 @@ import java.util.List;
  * Enunciado: 2. Verdadero/Falso de Museos Se mostrará una lista de nombres de
  * museos y el usuario tiene que decir si existen o no.
  *
- * 
+ *
  * Logica: Al igual que en el primer juego, en la clase Juego2 almacenamos los
  * museos del juego en una lista y otra lista para almacenar los museos que sean
  * verdaderos. Estas listas se rellenan en el constructor al crear el objeto.
  *
- * En el constructor, se separan los museos en dos listas: los museos falsos y
- * los museos verdaderos. Luego, se utiliza un bucle para seleccionar 10 museos
- * para el juego. Se genera un número aleatorio y se decide si el museo que se
- * va a añadir será verdadero (0) o falso (1). Además, se tiene en cuenta que
- * solo puede haber tres museos verdaderos, por lo que se verifica que el
- * contador de museos verdaderos no sea mayor que 3. Después, se elige
- * aleatoriamente entre los museos verdaderos o falsos que se encuentran en las
- * listas y se añade a la lista de museos del juego.
+ * En el constructor, guardamos todos los museos reales, y todos los museos
+ * falsos desordenamos, y añadimos con su respectiva cantidad (3 reales/ 7
+ * falsos), y desordenamos
  *
  * Además de esto, la clase Juego2 proporciona otros métodos, como getMuseos y
  * getMuseosExistentes, que devuelven la lista completa de museos y la lista de
@@ -46,7 +42,8 @@ public class Juego2 {
     public Juego2(Dao dao) {
         List<Museos> museosFalsos = new ArrayList<>(); // Variable para almacenar los museos falsos
         List<Museos> museosVerdaderos = new ArrayList<>(); // Variable para almacenar los museos verdaderos
-        int contMuseosReal = 0; // Contador de museos verdaderos
+        int nMuseosReales = 3; // Contador de museos verdaderos
+        int nMuseosNoReales = 7; // Contador de museos falsos
 
         // Separar los museos en verdaderos y falsos
         for (Museos museo : dao.getMuseos()) {
@@ -57,19 +54,21 @@ public class Juego2 {
             }
         }
 
-        // Generar los 10 museos del juego
-        for (int i = 0; i < 10; i++) {
-            int aleatorio = (int) (Math.random() * 2); // Generar 0 o 1 para decidir si el museo será verdadero o falso
+        //Desordenamos las listas
+        Collections.shuffle(museosFalsos);
+        Collections.shuffle(museosVerdaderos);
 
-            if (aleatorio == 0 || contMuseosReal <= 3) { // Si aleatorio es 0 o hay 3 o menos museos verdaderos
-                Museos museoSeleccionado = obtenerMuseoAleatorioSinRepetir(museosVerdaderos);
-                museos.add(museoSeleccionado);
-                museosExistentes.add(museoSeleccionado);
-                contMuseosReal++;
-            } else { // Si aleatorio es 1
-                museos.add(obtenerMuseoAleatorioSinRepetir(museosFalsos));
-            }
+        //Añadimos los museos
+        for (int i = 0; i < nMuseosReales; i++) {
+            museos.add(museosVerdaderos.get(i));
+            museosExistentes.add(museosVerdaderos.get(i));
         }
+        for (int i = 0; i < nMuseosNoReales; i++) {
+            museos.add(museosFalsos.get(i));
+        }
+
+        Collections.shuffle(museos);// Y desordenamos
+
     }
 
     public List<Museos> getMuseos() {
@@ -86,15 +85,5 @@ public class Juego2 {
             nombres.add(museo.getNombre_museo());
         }
         return nombres;
-    }
-
-    private Museos obtenerMuseoAleatorioSinRepetir(List<Museos> museos) {
-        int aleatorio;
-        do {
-            aleatorio = (int) (Math.random() * museos.size());
-        } while (museos.get(aleatorio) == null);
-        Museos museoSeleccionado = museos.get(aleatorio);
-        museos.set(aleatorio, null); // Marcamos el museo seleccionado como nulo para evitar seleccionarlo nuevamente
-        return museoSeleccionado;
     }
 }

@@ -48,9 +48,9 @@ public class Dao {
     private List<Ranking> listaRanking = new ArrayList<>(); // Almacena la lista de puntuaciones del ranking
 
     public Dao() {
-        Connection conn = ConexionBD.getConn();
-
-        try ( Statement st = conn.createStatement()) {
+        
+        try ( Connection conn = ConexionBD.getConn()) {
+            Statement st = conn.createStatement();
             ResultSet rs;
 
             // Rellenamos las listas con los datos de la base de datos

@@ -4,19 +4,79 @@
  */
 package com.gf.vistas;
 
+import com.gf.controles.Juego1;
+import com.gf.dao.Dao;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 /**
  *
- * @author Eduardo
+ * @author mario
  */
 public class GUI_Juego1 extends javax.swing.JFrame {
 
+    static JPanel panelContenedor;
+    private static Juego1 juego1;
+    private static Dao dao = new Dao();
     /**
-     * Creates new form GUI_Juego1
+     * Creates new form prueba
      */
     public GUI_Juego1() {
         initComponents();
+        setFrame();
+        this.juego1 = new Juego1(this.dao);
     }
 
+    private void setFrame() {
+        panelContenedor = new JPanel(new FlowLayout());
+        this.setLocationRelativeTo(null);  
+        this.getContentPane().add(panelContenedor, BorderLayout.CENTER);
+    
+    }
+
+    public static void insertarcuadors() throws MalformedURLException{
+        JPanel panelCuadros = new JPanel(new GridLayout(2, 0));
+        panelContenedor.add(panelCuadros);
+        List<String> listaURLS = juego1.urlImg();
+        int numeroCuadros = 10;
+        
+        for (int i = 0; i < numeroCuadros; i++) {
+            JLabel cuadro = new JLabel();
+            try {
+                URL imagen = new URL(listaURLS.get(i));
+                ImageIcon icono = new ImageIcon(imagen);
+                cuadro.setIcon(icono);
+                
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+                throw e;
+            }
+            panelCuadros.add(cuadro);
+        }
+    }
+    
+    public static void insertarNombre(){
+        JPanel panelNombres = new JPanel(new GridLayout(2, 0));
+        panelContenedor.add(panelNombres);
+        List<String> listaNombres = juego1.nombreObras();
+        List<String> listaAutores = juego1.autoresObra(GUI_Juego1.dao);
+        int numeroCuadros = 10;
+        
+        for (int i = 0; i < numeroCuadros; i++) {
+            String mensaje = listaNombres.get(i) + "\n" +listaAutores.get(i);
+            JLabel cuadro = new JLabel();
+            
+            panelCuadros.add(cuadro);
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,17 +87,7 @@ public class GUI_Juego1 extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        getContentPane().setLayout(new java.awt.GridLayout(2, 0));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

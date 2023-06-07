@@ -8,6 +8,7 @@ import com.gf.dao.Dao;
 import com.gf.modelos.Autores;
 import com.gf.modelos.Obras;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -22,12 +23,10 @@ import java.util.List;
  * listas: una para almacenar todas las obras y otra para las obras del Gregorio
  * Fernández.
  *
- * En el constructor, se recorren todas las obras y se separan las obras del
- * Gregorio Fernández y sus obras homónimas. Luego, se seleccionan
- * aleatoriamente las obras para el juego. Se elige una obra aleaotiramente
- * mediante el metodo obtenerObraAleatoriaSinRepetir y se para declarar si la
- * obra del Gregorio Fernández se guardará primero o segundo en cada par de
- * obras seleccionadas.
+ * En el constructor, al igual que el anterior, se hacen dos listas, una para
+ * las obras del Gregorio y otras las homologas y finalmente despues de
+ * desordenar una lista de numeros, y estos los usaremos como indice para
+ * colocar las anteriores lisdtas en la lista del juego
  *
  * La clase Juego3 también proporciona métodos para obtener las obras del juego,
  * las obras del Gregorio Fernández, los nombres de las obras y las URLs de las
@@ -45,7 +44,10 @@ public class Juego3 {
         List<Obras> obrasNoLista = new ArrayList<>(); // Obras que no son del Gregorio Fernández
         List<Autores> autoresLista = dao.getAutores();
         Autores GF = ControlJuegos.seleccionarGF(autoresLista); // Buscar al Gregorio Fernández entre los autores
+        List<Integer> indicesAleatorios = new ArrayList<>(); // Variable para guardar los indices de la lista aleatorios
+        int cantidadObras = 6; // Variable para la cantidad de obras del juego
 
+        // Guardamos segun sean del GF o homonimas
         for (Obras obra : dao.getObras()) {
             if (obra.getId_autor() == GF.getId_autor()) {
                 obrasGFLista.add(obra);
@@ -57,25 +59,29 @@ public class Juego3 {
             }
         }
 
-        List<Integer> aleatoriosSel = new ArrayList<>(); // Obras seleccionadas aleatoriamente
-        int aleatorio;
-        int mezcla;
+        //Rellenamos el lista de inidices
+        for (int i = 0; i < cantidadObras; i++) {
+            indicesAleatorios.add(i);
+        }
 
-        for (int i = 0; i < 6; i++) {
-            Obras obraSeleccionada = obtenerObraAleatoriaSinRepetir(obrasGFLista);
-            Obras obraHomonima = obtenerObraAleatoriaSinRepetir(obrasNoLista);
+        // La descolocamos
+        Collections.shuffle(indicesAleatorios);
 
-            mezcla = (int) (Math.random() * 2);
+        // Medianet un numero aleatorio decidimos si van ante(izq) o despues(deer) en la lista 
+        for (int i = 0; i < cantidadObras; i++) {
+
+            int mezcla = (int) (Math.random() * 2);
 
             if (mezcla == 0) {
-                this.obras.add(obraSeleccionada);
-                this.obras.add(obraHomonima);
+                this.obras.add(obrasGFLista.get(indicesAleatorios.get(i)));
+                this.obras.add(obrasNoLista.get(indicesAleatorios.get(i)));
             } else {
-                this.obras.add(obraHomonima);
-                this.obras.add(obraSeleccionada);
+                this.obras.add(obrasNoLista.get(indicesAleatorios.get(i)));
+                this.obras.add(obrasGFLista.get(indicesAleatorios.get(i)));
             }
 
-            this.obrasGF.add(obraSeleccionada);
+            // Guardamos entre las obras que son del GF
+            this.obrasGF.add(obrasGFLista.get(indicesAleatorios.get(i)));
         }
     }
 
@@ -119,15 +125,5 @@ public class Juego3 {
         }
 
         return verdaderas;
-    }
-
-    public Obras obtenerObraAleatoriaSinRepetir(List<Obras> obras) {
-        int aleatorio;
-        do {
-            aleatorio = (int) (Math.random() * obras.size());
-        } while (obras.get(aleatorio) == null);
-        Obras obraSeleccionada = obras.get(aleatorio);
-        obras.set(aleatorio, null);
-        return obraSeleccionada;
     }
 }
