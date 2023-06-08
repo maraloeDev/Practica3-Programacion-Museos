@@ -6,7 +6,7 @@ import javax.swing.UIManager;
 
 /**
  *
- * @author Eduardo Martin-Sonseca Mario Ortuñez
+ * @author Eduardo Martin-Sonseca && Mario Ortuñez Sanz
  */
 public class GUIPrincipal extends javax.swing.JFrame {
     /**

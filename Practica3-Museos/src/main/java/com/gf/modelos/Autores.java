@@ -2,7 +2,7 @@ package com.gf.modelos;
 
 /**
  *
- * @author Eduardo Martin-Sonseca
+ * @author @author Eduardo Martin-Sonseca && Mario Ortuñez Sanz
  */
 public class Autores {
     

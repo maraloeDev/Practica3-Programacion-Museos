@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  *
- * @author Eduardo Martín-Sonseca Mario Ortuñez
+ * @author Eduardo Martin-Sonseca && Mario Ortuñez Sanz
  *
  * 3. Gregorio Fernández. El usuario tiene que adivinar cual de dos imágenes de
  * esculturas planteadas, corresponde su autoría a Gregorio Fernández
