@@ -94,7 +94,7 @@ public class GUI_Juego1 extends javax.swing.JFrame {
         Dimension dimension = new Dimension(200, 50);
         datosCuadro.setPreferredSize(dimension);
 
-        datosCuadro.setHorizontalAlignment(SwingConstants.CENTER); // Centrar el texto
+        datosCuadro.setHorizontalAlignment(SwingConstants.CENTER);
 
         panelDatos.add(datosCuadro);
     }

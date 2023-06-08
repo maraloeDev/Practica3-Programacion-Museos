@@ -13,30 +13,14 @@ import java.util.List;
 
 /**
  *
- * @author Mario Ortuñez
+ * @author Eduardo Martín-Sonseca Mario Ortuñez
  *
  * 3. Gregorio Fernández. El usuario tiene que adivinar cual de dos imágenes de
  * esculturas planteadas, corresponde su autoría a Gregorio Fernández
  *
  *
- * Lógica: Al igual que en los juegos anteriores, la clase Juego3 utiliza dos
- * listas: una para almacenar todas las obras y otra para las obras del Gregorio
- * Fernández.
- *
- * En el constructor, al igual que el anterior, se hacen dos listas, una para
- * las obras del Gregorio y otras las homologas y finalmente despues de
- * desordenar una lista de numeros, y estos los usaremos como indice para
- * colocar las anteriores lisdtas en la lista del juego
- *
- * La clase Juego3 también proporciona métodos para obtener las obras del juego,
- * las obras del Gregorio Fernández, los nombres de las obras y las URLs de las
- * imágenes de las obras. Además, tenemos un método para determinar si la imagen
- * verdadera estará a la izquierda ('i') o derecha ('d'). Por ultimo el metodo
- * para seleccionar las obras del Gregorio Fernandez
- *
  */
 public class Juego3 {
-
     private final List<Obras> obras = new ArrayList<>(); // Obras seleccionadas para el juego 3
     private final List<Obras> obrasGF = new ArrayList<>(); // Obras del Gregorio Fernández entre las seleccionadas
 
@@ -44,11 +28,11 @@ public class Juego3 {
         List<Obras> obrasGFLista = new ArrayList<>(); // Obras del Gregorio Fernández
         List<Obras> obrasNoLista = new ArrayList<>(); // Obras que no son del Gregorio Fernández
         List<Autores> autoresLista = dao.getAutores();
-        Autores GF = seleccionarGF(autoresLista); // Buscar al Gregorio Fernández entre los autores
-        List<Integer> indicesAleatorios = new ArrayList<>(); // Variable para guardar los indices de la lista aleatorios
-        int cantidadObras = 6; // Variable para la cantidad de obras del juego
+        Autores GF = seleccionarGF(autoresLista); // Buscar a Gregorio Fernández entre los autores
+        List<Integer> indicesAleatorios = new ArrayList<>(); // Variable para guardar los índices de la lista aleatorios
+        int cantidadObras = 6; // Cantidad de obras del juego
 
-        // Guardamos segun sean del GF o homonimas
+        // Guardamos las obras del GF y las que no son del GF
         for (Obras obra : dao.getObras()) {
             if (obra.getId_autor() == GF.getId_autor()) {
                 obrasGFLista.add(obra);
@@ -60,17 +44,16 @@ public class Juego3 {
             }
         }
 
-        //Rellenamos el lista de inidices
+        // Rellenamos la lista de índices
         for (int i = 0; i < cantidadObras; i++) {
             indicesAleatorios.add(i);
         }
 
-        // La descolocamos
+        // Desordenamos la lista de índices
         Collections.shuffle(indicesAleatorios);
 
-        // Medianet un numero aleatorio decidimos si van ante(izq) o despues(deer) en la lista 
+        // Decidimos si las obras van antes (izq) o después (der) en la lista de manera aleatoria
         for (int i = 0; i < cantidadObras; i++) {
-
             int mezcla = (int) (Math.random() * 2);
 
             if (mezcla == 0) {
@@ -81,7 +64,7 @@ public class Juego3 {
                 this.obras.add(obrasGFLista.get(indicesAleatorios.get(i)));
             }
 
-            // Guardamos entre las obras que son del GF
+            // Guardamos las obras del GF en la lista de obras del GF
             this.obrasGF.add(obrasGFLista.get(indicesAleatorios.get(i)));
         }
     }
@@ -119,16 +102,16 @@ public class Juego3 {
 
         for (int i = 0; i < obras.size(); i += 2) {
             if (obras.get(i) == obrasGF.get(i)) {
-                verdaderas.add('i');
+                verdaderas.add('i'); // 'i' indica que la obra es del GF
             } else {
-                verdaderas.add('d');
+                verdaderas.add('d'); // 'd' indica que la obra no es del GF
             }
         }
 
         return verdaderas;
     }
 
-    // Buscar obras del Gregorio Fernandez
+    // Buscar obras del Gregorio Fernández
     public static Autores seleccionarGF(List<Autores> autoresLista) throws Exception {
         Autores GF = null;
         try {
@@ -142,7 +125,7 @@ public class Juego3 {
                 throw new Exception();
             }
         } catch (Exception e) {
-            System.out.println("Algo sucedio y no se pudo encontrar entre los autores a Gregorio Fernandez");
+            System.out.println("Algo sucedió y no se pudo encontrar a Gregorio Fernández entre los autores.");
             throw e;
         }
         return GF;
