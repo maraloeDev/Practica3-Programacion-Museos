@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 public class GUI_Juego2 extends javax.swing.JFrame {
 
     private static final Dao dao = new Dao();
-    private static final Juego2 juego2 = new Juego2(dao);
+    private static Juego2 juego2 = new Juego2(dao);
     static JPanel panelContenedor = new JPanel(new GridLayout(0,1));
 
     /**
@@ -36,7 +36,7 @@ public class GUI_Juego2 extends javax.swing.JFrame {
     }
 
     private void controles() {
-        //Recorro el nombre de los museos
+        //Recorro el nombre de los  museos
         for (String museosV : juego2.getNombresMuseos()) {
             JCheckBox museosVerdaderos = new JCheckBox(museosV);
             panelContenedor.add(museosVerdaderos);

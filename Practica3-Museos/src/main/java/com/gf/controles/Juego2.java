@@ -61,7 +61,7 @@ public class Juego2 {
         /*Se tomará la cantidad mínima entre 3 y el tamaño de museosVerdaderos, evitando así el error si hay menos de 3 museos verdaderos.*/
         museos.addAll(museosVerdaderos.subList(0, Math.min(3, museosVerdaderos.size())));
         museosExistentes.addAll(museosVerdaderos.subList(0, Math.min(3, museosVerdaderos.size())));
-        museos.addAll(museosFalsos.subList(0, 7));
+        boolean addAll = museos.addAll(museosFalsos.subList(0, 7));
 
         Collections.shuffle(museos);
 
