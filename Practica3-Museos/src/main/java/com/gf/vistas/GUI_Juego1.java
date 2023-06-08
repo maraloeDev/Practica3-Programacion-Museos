@@ -33,7 +33,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 /**
  *
- * @author Eduardo Martín-Sonseca Mario Ortuñez
+ * @author Eduardo Martín-Sonseca y Mario Ortuñez
  *
  * Clase del primer juego
  *

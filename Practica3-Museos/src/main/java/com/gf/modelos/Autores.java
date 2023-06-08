@@ -2,7 +2,7 @@ package com.gf.modelos;
 
 /**
  *
- * @author @author Eduardo Martin-Sonseca && Mario Ortuñez Sanz
+ * @author Eduardo Martín-Sonseca y Mario Ortuñez
  */
 public class Autores {
     
@@ -19,10 +19,7 @@ public class Autores {
     }
     
     // Metodos Getter y Setter
-    public Autores() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
+    
     public int getId_autor() {
         return id_autor;
     }

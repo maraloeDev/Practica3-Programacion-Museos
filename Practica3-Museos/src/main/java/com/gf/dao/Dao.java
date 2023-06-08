@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Eduardo Martin-Sonseca && Mario Ortuñez Sanz
+ * @author Eduardo Martín-Sonseca y Mario Ortuñez
  *
  *
  */

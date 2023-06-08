@@ -2,7 +2,7 @@ package com.gf.modelos;
 
 /**
  *
- * @author Eduardo Martin-Sonseca
+ * @author Eduardo Martín-Sonseca y Mario Ortuñez
  */
 public class Ranking {
     

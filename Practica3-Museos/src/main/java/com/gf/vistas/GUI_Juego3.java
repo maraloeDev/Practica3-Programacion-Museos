@@ -6,7 +6,7 @@ package com.gf.vistas;
 
 /**
  *
- * @author Eduardo Martin-Sonseca && Mario Ortuñez Sanz
+ * @author Eduardo Martín-Sonseca y Mario Ortuñez
  */
 public class GUI_Juego3 extends javax.swing.JFrame {
 
