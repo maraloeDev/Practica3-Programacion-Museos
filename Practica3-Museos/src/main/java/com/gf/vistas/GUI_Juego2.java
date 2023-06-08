@@ -6,19 +6,28 @@ package com.gf.vistas;
 
 import com.gf.controles.Juego2;
 import com.gf.dao.Dao;
+import com.gf.modelos.Museos;
+import java.awt.AWTEventMulticaster;
+import java.awt.Component;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import javax.swing.JCheckBox;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
  *
- * @author Eduardo
+ * @author Eduardo Martin-Sonseca Mario Ortuñes Sanz
  */
 public class GUI_Juego2 extends javax.swing.JFrame {
 
     private static final Dao dao = new Dao();
-    private static Juego2 juego2 = new Juego2(dao);
-    static JPanel panelContenedor = new JPanel(new GridLayout(0,1));
+    private static final Juego2 juego2 = new Juego2(dao);
+    static JPanel panelContenedor = new JPanel(new GridLayout(0, 1));
+    private int contador = 0;
 
     /**
      * Creates new form GUI_Juego2
@@ -38,8 +47,38 @@ public class GUI_Juego2 extends javax.swing.JFrame {
     private void controles() {
         //Recorro el nombre de los  museos
         for (String museosV : juego2.getNombresMuseos()) {
-            JCheckBox museosVerdaderos = new JCheckBox(museosV);
-            panelContenedor.add(museosVerdaderos);
+            JCheckBox museosJuego = new JCheckBox(museosV);
+            museosJuego.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (museosJuego.isSelected()) {
+                        contador++;
+                        if (contador >= 3) {
+                            for (Component component : panelContenedor.getComponents()) {
+                                if (component instanceof JCheckBox) {
+                                    JCheckBox checkbox = (JCheckBox) component;
+                                    if (!checkbox.isSelected()) {
+                                        checkbox.setEnabled(false);
+                                    }
+                                }
+                            }
+                        }
+                    } else if (!museosJuego.isSelected()){
+                        contador--;
+                        if (contador <=3) {
+                            contador++;
+                            for (Component component : panelContenedor.getComponents()) {
+                                if (component instanceof JCheckBox) {
+                                    JCheckBox checkbox = (JCheckBox) component;
+                                    checkbox.setEnabled(true);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            );
+            panelContenedor.add(museosJuego);
         }
     }
 
@@ -82,16 +121,24 @@ public class GUI_Juego2 extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUI_Juego2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI_Juego2.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUI_Juego2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI_Juego2.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUI_Juego2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI_Juego2.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUI_Juego2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI_Juego2.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
