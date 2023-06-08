@@ -67,7 +67,7 @@ public class GUI_Juego1 extends JFrame {
     }
 
     public static void insertarCuadros() throws MalformedURLException {
-        JPanel panelCuadros = new JPanel(new GridLayout(0, 2));
+        JPanel panelCuadros = new JPanel(new GridLayout(0, 1));
         panelContenedor.add(panelCuadros);
         List<String> listaURLS = juego1.urlImg();
         int numeroCuadros = 10;
