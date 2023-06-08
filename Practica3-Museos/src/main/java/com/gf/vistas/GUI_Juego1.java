@@ -6,9 +6,8 @@ package com.gf.vistas;
 
 import com.gf.controles.Juego1;
 import com.gf.dao.Dao;
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.net.MalformedURLException;
@@ -16,9 +15,11 @@ import java.net.URL;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 /**
  *
@@ -26,7 +27,7 @@ import javax.swing.JPanel;
  */
 public class GUI_Juego1 extends javax.swing.JFrame {
 
-    private static JPanel panelContenedor = new JPanel();
+    private static JPanel panelContenedor = new JPanel(new GridLayout(0, 2));
     private static Juego1 juego1;
     private static Dao dao = new Dao();
 
@@ -47,11 +48,10 @@ public class GUI_Juego1 extends javax.swing.JFrame {
         this.setTitle("Juego 1");
         this.setLocationRelativeTo(null);
         this.setContentPane(panelContenedor);
-        panelContenedor.setPreferredSize(new Dimension(500, 500));
     }
 
     public static void insertarCuadros() throws MalformedURLException {
-        JPanel panelCuadros = new JPanel(new GridLayout(2, 0));
+        JPanel panelCuadros = new JPanel(new GridLayout(0, 2));
         panelContenedor.add(panelCuadros);
         List<String> listaURLS = juego1.urlImg();
         int numeroCuadros = 10;
@@ -61,9 +61,9 @@ public class GUI_Juego1 extends javax.swing.JFrame {
             try {
                 URL imagenUrl = new URL(listaURLS.get(i));
                 ImageIcon icono = new ImageIcon(imagenUrl);
-                Image imagen = icono.getImage().getScaledInstance(10, 10, Image.SCALE_SMOOTH);
+                Image imagen = icono.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
                 cuadro.setIcon(new ImageIcon(imagen));
-                
+
             } catch (MalformedURLException e) {
                 e.printStackTrace();
                 throw e;
@@ -73,18 +73,32 @@ public class GUI_Juego1 extends javax.swing.JFrame {
     }
 
     public static void insertarNombre() {
-        JPanel panelNombres = new JPanel(new GridLayout(2, 0));
-        panelContenedor.add(panelNombres);
-        List<String> listaNombres = juego1.nombreObras();
-        List<String> listaAutores = juego1.autoresObra(dao);
-        int numeroCuadros = 10;
+    JPanel panelDatos = new JPanel(new GridLayout(0, 2));
+    panelContenedor.add(panelDatos);
 
-        for (int i = 0; i < numeroCuadros; i++) {
-            String mensaje = listaNombres.get(i) + "\n" + listaAutores.get(i);
-            JLabel cuadro = new JLabel(mensaje);
-            panelNombres.add(cuadro);
-        }
+    List<String> listaNombres = juego1.nombreObras();
+    List<String> listaAutores = juego1.autoresObra(dao);
+    int numeroCuadros = 10;
+
+    for (int i = 0; i < numeroCuadros; i++) {
+        String nombre = listaNombres.get(i);
+        String autor = listaAutores.get(i);
+        String mensaje = "<html> <h3>" + nombre + " </h3><br>" + autor + "</html>";
+        JLabel datosCuadro = new JLabel(mensaje);
+
+        Color colorNota = new Color(250, 235, 175);
+        datosCuadro.setBorder(BorderFactory.createLineBorder(Color.ORANGE));
+        datosCuadro.setOpaque(true);
+        datosCuadro.setBackground(colorNota);
+
+        Dimension dimension = new Dimension(200, 50);
+        datosCuadro.setPreferredSize(dimension);
+
+        datosCuadro.setHorizontalAlignment(SwingConstants.CENTER); // Centrar el texto
+
+        panelDatos.add(datosCuadro);
     }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -96,7 +110,17 @@ public class GUI_Juego1 extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new java.awt.GridLayout(2, 0));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 649, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 536, Short.MAX_VALUE)
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

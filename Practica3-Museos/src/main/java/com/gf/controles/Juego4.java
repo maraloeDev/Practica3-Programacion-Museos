@@ -18,15 +18,6 @@ import java.util.List;
  * 4. Coloca en el mapa. El usuario tiene que colocar en un mapa europeo obras
  * de arte
  *
- * Lógica: Este último juego tiene una lista con las cuatro obras del juego 4,
- * las cuales se seleccionan de los juegos anteriores mediante el ControlJuegos
- * y se añaden en el constructor.
- *
- * Además, se implementan métodos para obtener los nombres de las obras, las
- * URLs de sus imágenes y, por último, un método para obtener el país de
- * ubicación de cada obra mediante su museo.
- *
- *
  */
 public class Juego4 {
 
@@ -84,11 +75,11 @@ public class Juego4 {
                 if (paisObra != null) {
                     paises.add(paisObra.getNombre_pais());// Añadimos a la lista
                 } else {
-                    paises.add("En el metodo no se encontro el pais del museo y este quedo en null.");
+                    paises.add("En el método no se encontró el país del museo y este quedó en null.");
                     throw new NullPointerException();
                 }
-            } catch (NullPointerException e) {// Controlamos que no se encuentre el pais o el museo, por lo que quedaria alguno en null
-                System.out.println("En el metodo no se encontro el museo de la obra y este quedo en null.");
+            } catch (NullPointerException e) {// Controlamos que no se encuentre el país o el museo, por lo que quedaría alguno en null
+                System.out.println("En el método no se encontró el museo de la obra y este quedó en null.");
                 throw e;
             }
         }

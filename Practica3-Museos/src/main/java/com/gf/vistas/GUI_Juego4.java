@@ -4,17 +4,75 @@
  */
 package com.gf.vistas;
 
+import com.gf.controles.Juego4;
+import com.gf.dao.Dao;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
 /**
  *
  * @author Eduardo
  */
 public class GUI_Juego4 extends javax.swing.JFrame {
 
-    /**
-     * Creates new form GUI_Juego4
-     */
+    private static JPanel panelContenedor = new JPanel();
+    private static Juego4 juego4;
+    private static Dao dao = new Dao();
+
     public GUI_Juego4() {
-        initComponents();
+        try {
+            initComponents();
+            setFrame();
+            int n = (int) (Math.random() * 10);
+            juego4 = new Juego4(dao, dao.getObras().get(n), dao.getObras().get(n), dao.getObras().get(n), dao.getObras().get(n));
+            insertarCuadros();
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(GUI_Juego4.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void setFrame() {
+        this.setTitle("Juego 4");
+        this.setLocationRelativeTo(null);
+        this.setContentPane(panelContenedor);
+    }
+
+    public static void insertarCuadros() throws MalformedURLException {
+        JPanel panelCuadros = new JPanel(new GridLayout(2, 0));
+        panelContenedor.add(panelCuadros);
+        List<String> listaURLS = juego4.urlImg();
+        List<String> listaNombres = juego4.nombreObras();
+
+        int numeroCuadros = Math.min(listaURLS.size(), listaNombres.size());
+
+        for (int i = 0; i < numeroCuadros; i++) {
+            JLabel cuadro = new JLabel();
+            try {
+                URL imagenUrl = new URL(listaURLS.get(i));
+                ImageIcon icono = new ImageIcon(imagenUrl);
+                Image imagen = icono.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+                cuadro.setIcon(new ImageIcon(imagen));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+                throw e;
+            }
+            panelCuadros.add(cuadro);
+        }
+        for (int i = 0; i < numeroCuadros; i++) {
+            JLabel nombre = new JLabel(listaNombres.get(i));
+            panelCuadros.add(nombre);
+        }
     }
 
     /**
@@ -46,11 +104,6 @@ public class GUI_Juego4 extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -67,9 +120,6 @@ public class GUI_Juego4 extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(GUI_Juego4.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new GUI_Juego4().setVisible(true);

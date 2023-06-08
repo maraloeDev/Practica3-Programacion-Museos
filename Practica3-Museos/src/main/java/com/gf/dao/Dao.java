@@ -22,21 +22,6 @@ import javax.swing.JOptionPane;
  *
  * @author Mario Ortuñez
  *
- * Logica: Esta clase se encarga de realizar la conexión con la base de datos y
- * recuperar los datos de las tablas correspondientes. En el constructor, se
- * establece la conexión con la base de datos y se ejecutan las consultas
- * necesarias para obtener los registros de las tablas de autores, museos,
- * obras, países y ranking. Los resultados de las consultas se utilizan para
- * crear objetos de las respectivas clases (Autores, Museos, Obras, Paises,
- * Ranking) y se almacenan en listas para su posterior acceso.
- *
- * Al crear un objeto de esta clase, se llenan automáticamente las listas con
- * los datos recuperados de la base de datos. Los métodos getter proporcionan
- * acceso a estas listas para que puedan ser utilizadas en otras partes del
- * programa.
- *
- * Por ultimo, decir que se controla algun error al conectar y/o recuperar los
- * datos de la base dedatos en el constructor mediante los try - catch
  *
  */
 public class Dao {
