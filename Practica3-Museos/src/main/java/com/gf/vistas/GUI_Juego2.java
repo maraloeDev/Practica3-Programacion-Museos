@@ -6,21 +6,17 @@ package com.gf.vistas;
 
 import com.gf.controles.Juego2;
 import com.gf.dao.Dao;
-<<<<<<< Updated upstream
-=======
-import java.awt.Color;
->>>>>>> Stashed changes
+import com.gf.modelos.Museos;
 import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-<<<<<<< Updated upstream
-import javax.swing.JCheckBox;
-=======
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
->>>>>>> Stashed changes
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -31,8 +27,11 @@ public class GUI_Juego2 extends javax.swing.JFrame {
 
     private static final Dao dao = new Dao();
     private static final Juego2 juego2 = new Juego2(dao);
-    static JPanel panelContenedor = new JPanel(new GridLayout(0, 1));
+    private static final JPanel panelContenedor = new JPanel(new GridLayout(0, 1));
     private int contador = 0;
+    private static final JLabel labelResultado = new JLabel("ES CORRECTO!!");
+    private static final JButton botonComprobar = new JButton("Comprobar");
+    static List<String> museosSeleccionados = new ArrayList<>();
 
     /**
      * Creates new form GUI_Juego2
@@ -47,72 +46,71 @@ public class GUI_Juego2 extends javax.swing.JFrame {
         this.setTitle("Verdadero/Falso de Museos");
         this.setContentPane(panelContenedor);
         this.setLocationRelativeTo(null);
-        JButton botonComprobar = new JButton("Comprobar");
+        labelResultado.setVisible(false);
+        panelContenedor.add(labelResultado);
+
         botonComprobar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 for (Component componente : panelContenedor.getComponents()) {
                     if (componente instanceof JCheckBox) {
                         JCheckBox checkbox = (JCheckBox) componente;
                         if (checkbox.isSelected()) {
-                            JLabel labelResultado = new JLabel("ES CORRECTO!!");
-                            panelContenedor.add(labelResultado);
+                            museosSeleccionados.add(checkbox.getText());
+                            labelResultado.setVisible(true);
+                        } else {
+                            labelResultado.setVisible(false);
                         }
                     }
                 }
                 panelContenedor.revalidate();
                 panelContenedor.repaint();
+
+                if (!todosMuseosVerdaderos(museosSeleccionados)) {
+                    JOptionPane.showMessageDialog(GUI_Juego2.this, "Enhorabuena, todos los museos seleccionados son verdaderos");
+                } else {
+                    JOptionPane.showMessageDialog(GUI_Juego2.this, "Tienes que seleccionar un maximo de 3 museos");
+                }
             }
         });
-    panelContenedor.add(botonComprobar); //Poner abajo
+    }
+
+    private boolean todosMuseosVerdaderos(List<String> museosSeleccionados) {
+        for (String museoSeleccionado : museosSeleccionados) {
+            Museos museo = (Museos) juego2.getMuseos(museoSeleccionado); // Obtengo el objeto Museo
+            if (museo == null || museo.isExiste_museo()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void control() {
-        // Recorre los nombres de los museos
-        for (String museo : juego2.getNombresMuseos()) {
+        List<JCheckBox> checkboxes = new ArrayList<>();
+
+        // Obtener la lista de nombres de museos de la base de datos
+        List<String> nombresMuseosBD = juego2.getNombresMuseos();
+
+        for (String museo : nombresMuseosBD) {
             JCheckBox checkBoxMuseo = new JCheckBox(museo);
-            checkBoxMuseo.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (checkBoxMuseo.isSelected()) {
-                        contador++;
-                        if (contador >= 3) {
-                            for (Component componente : panelContenedor.getComponents()) {
-                                if (componente instanceof JCheckBox) {
-                                    JCheckBox checkbox = (JCheckBox) componente;
-                                    if (!checkbox.isSelected()) {
-                                        checkbox.setEnabled(false);
-                                    }
-                                }
-                            }
-                        }
-                    } else {
-                        contador--;
-                        if (contador <= 3) {
-                            for (Component componente : panelContenedor.getComponents()) {
-                                if (componente instanceof JCheckBox) {
-                                    JCheckBox checkbox = (JCheckBox) componente;
-                                    checkbox.setEnabled(true);
-                                }
-                            }
-                        }
-                    }
-                }
+
+            // Verificar si el nombre del museo está en la lista de nombres de museos
+            if (juego2.getNombresMuseos() != null) {
+                checkBoxMuseo.setSelected(true); // Marcar como seleccionado por defecto
+                contador++;
+            }
+
+            checkboxes.add(checkBoxMuseo);
+            checkBoxMuseo.addActionListener((ActionEvent e) -> {
+                // Resto del código
             });
             panelContenedor.add(checkBoxMuseo);
-        }
-    }
-    
-    /**
-     * Este método se llama desde el constructor para inicializar el formulario.
-     * ADVERTENCIA: No modifiques este código. El contenido de este método siempre se regenera automáticamente por el editor de formularios.
-     */
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
+        }
+        panelContenedor.add(botonComprobar);
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

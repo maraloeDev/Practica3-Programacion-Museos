@@ -53,7 +53,7 @@ public class Juego2 {
         Collections.shuffle(museos);
     }
 
-    public List<Museos> getMuseos() {
+    public List<Museos> getMuseos(String museoSeleccionado) {
         return museos;
     }
 
