@@ -6,11 +6,21 @@ package com.gf.vistas;
 
 import com.gf.controles.Juego2;
 import com.gf.dao.Dao;
+<<<<<<< Updated upstream
+=======
+import java.awt.Color;
+>>>>>>> Stashed changes
 import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+<<<<<<< Updated upstream
 import javax.swing.JCheckBox;
+=======
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+>>>>>>> Stashed changes
 import javax.swing.JPanel;
 
 /**
@@ -30,52 +40,73 @@ public class GUI_Juego2 extends javax.swing.JFrame {
     public GUI_Juego2() {
         initComponents();
         setFrame();
-        controles();
+        control();
     }
 
     private void setFrame() {
         this.setTitle("Verdadero/Falso de Museos");
         this.setContentPane(panelContenedor);
         this.setLocationRelativeTo(null);
+        JButton botonComprobar = new JButton("Comprobar");
+        botonComprobar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (Component componente : panelContenedor.getComponents()) {
+                    if (componente instanceof JCheckBox) {
+                        JCheckBox checkbox = (JCheckBox) componente;
+                        if (checkbox.isSelected()) {
+                            JLabel labelResultado = new JLabel("ES CORRECTO!!");
+                            panelContenedor.add(labelResultado);
+                        }
+                    }
+                }
+                panelContenedor.revalidate();
+                panelContenedor.repaint();
+            }
+        });
+    panelContenedor.add(botonComprobar); //Poner abajo
     }
 
-    private void controles() {
-        //Recorro el nombre de los  museos
-        for (String museosV : juego2.getNombresMuseos()) {
-            JCheckBox museosJuego = new JCheckBox(museosV);
-            museosJuego.addActionListener(new ActionListener() {
+    private void control() {
+        // Recorre los nombres de los museos
+        for (String museo : juego2.getNombresMuseos()) {
+            JCheckBox checkBoxMuseo = new JCheckBox(museo);
+            checkBoxMuseo.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (museosJuego.isSelected()) {
+                    if (checkBoxMuseo.isSelected()) {
                         contador++;
                         if (contador >= 3) {
-                            for (Component component : panelContenedor.getComponents()) {
-                                if (component instanceof JCheckBox) {
-                                    JCheckBox checkbox = (JCheckBox) component;
+                            for (Component componente : panelContenedor.getComponents()) {
+                                if (componente instanceof JCheckBox) {
+                                    JCheckBox checkbox = (JCheckBox) componente;
                                     if (!checkbox.isSelected()) {
                                         checkbox.setEnabled(false);
                                     }
                                 }
                             }
                         }
-                    } else if (!museosJuego.isSelected()){
+                    } else {
                         contador--;
-                        if (contador <=3) {
-                            contador++;
-                            for (Component component : panelContenedor.getComponents()) {
-                                if (component instanceof JCheckBox) {
-                                    JCheckBox checkbox = (JCheckBox) component;
+                        if (contador <= 3) {
+                            for (Component componente : panelContenedor.getComponents()) {
+                                if (componente instanceof JCheckBox) {
+                                    JCheckBox checkbox = (JCheckBox) componente;
                                     checkbox.setEnabled(true);
                                 }
                             }
                         }
                     }
                 }
-            }
-            );
-            panelContenedor.add(museosJuego);
+            });
+            panelContenedor.add(checkBoxMuseo);
         }
     }
+    
+    /**
+     * Este método se llama desde el constructor para inicializar el formulario.
+     * ADVERTENCIA: No modifiques este código. El contenido de este método siempre se regenera automáticamente por el editor de formularios.
+     */
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -138,10 +169,8 @@ public class GUI_Juego2 extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GUI_Juego2().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new GUI_Juego2().setVisible(true);
         });
     }
 

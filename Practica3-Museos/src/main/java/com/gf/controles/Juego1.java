@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  *
- * @author Mario Ortuñez
+ * @author Eduardo Martín-SonsecaMario Ortuñez
  *
  * Clase del primer juego
  *
