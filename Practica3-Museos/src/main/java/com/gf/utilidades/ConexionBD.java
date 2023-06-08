@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Eduardo Martin-Sonseca
+ * @author Eduardo Martin-Sonseca && Mario Ortuñez Sanz
  */
 public class ConexionBD {
 

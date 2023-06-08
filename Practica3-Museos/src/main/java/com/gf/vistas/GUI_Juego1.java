@@ -29,7 +29,7 @@ import javax.swing.TransferHandler;
 
 /**
  *
- * @author Eduardo Martín-Sonseca Mario Ortuñez
+ * @author Eduardo Martin-Sonseca && Mario Ortuñez Sanz
  * 
   * Clase del primer juego
  *

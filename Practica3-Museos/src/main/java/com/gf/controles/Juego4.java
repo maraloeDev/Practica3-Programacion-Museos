@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  *
- * @author Eduardo Martín-Sonseca Mario Ortuñez
+ * @author Eduardo Martin-Sonseca && Mario Ortuñez Sanz
  *
  * 4. Coloca en el mapa. El usuario tiene que colocar en un mapa europeo obras
  * de arte
