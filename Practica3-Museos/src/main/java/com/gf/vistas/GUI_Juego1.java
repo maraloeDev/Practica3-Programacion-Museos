@@ -7,11 +7,15 @@ package com.gf.vistas;
 import com.gf.controles.Juego1;
 import com.gf.dao.Dao;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,7 +26,7 @@ import javax.swing.JPanel;
  */
 public class GUI_Juego1 extends javax.swing.JFrame {
 
-    private static JPanel panelContenedor;
+    private static JPanel panelContenedor = new JPanel();
     private static Juego1 juego1;
     private static Dao dao = new Dao();
 
@@ -31,12 +35,19 @@ public class GUI_Juego1 extends javax.swing.JFrame {
         setFrame();
 //        this.dao = dao;
         this.juego1 = new Juego1(dao);
+        try {
+            insertarCuadros();
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(GUI_Juego1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        insertarNombre();
     }
 
     private void setFrame() {
-        panelContenedor = new JPanel(new FlowLayout());
+        this.setTitle("Juego 1");
         this.setLocationRelativeTo(null);
-        this.getContentPane().add(panelContenedor, BorderLayout.CENTER);
+        this.setContentPane(panelContenedor);
+        panelContenedor.setPreferredSize(new Dimension(500, 500));
     }
 
     public static void insertarCuadros() throws MalformedURLException {
@@ -48,9 +59,11 @@ public class GUI_Juego1 extends javax.swing.JFrame {
         for (int i = 0; i < numeroCuadros; i++) {
             JLabel cuadro = new JLabel();
             try {
-                URL imagen = new URL(listaURLS.get(i));
-                ImageIcon icono = new ImageIcon(imagen);
-                cuadro.setIcon(icono);
+                URL imagenUrl = new URL(listaURLS.get(i));
+                ImageIcon icono = new ImageIcon(imagenUrl);
+                Image imagen = icono.getImage().getScaledInstance(10, 10, Image.SCALE_SMOOTH);
+                cuadro.setIcon(new ImageIcon(imagen));
+                
             } catch (MalformedURLException e) {
                 e.printStackTrace();
                 throw e;
