@@ -22,27 +22,24 @@ import javax.swing.JPanel;
  */
 public class GUI_Juego1 extends javax.swing.JFrame {
 
-    static JPanel panelContenedor;
+    private static JPanel panelContenedor;
     private static Juego1 juego1;
-    private static Dao dao ;
+    private static Dao dao = new Dao();
 
-    /**
-     * Creates new form GUI_Juego1 Creates new form prueba
-     */
-    public GUI_Juego1(Dao dao) {
+    public GUI_Juego1() {
         initComponents();
         setFrame();
-        this.juego1 = new Juego1(this.dao);
+//        this.dao = dao;
+        this.juego1 = new Juego1(dao);
     }
 
     private void setFrame() {
         panelContenedor = new JPanel(new FlowLayout());
         this.setLocationRelativeTo(null);
         this.getContentPane().add(panelContenedor, BorderLayout.CENTER);
-
     }
 
-    public static void insertarcuadors() throws MalformedURLException {
+    public static void insertarCuadros() throws MalformedURLException {
         JPanel panelCuadros = new JPanel(new GridLayout(2, 0));
         panelContenedor.add(panelCuadros);
         List<String> listaURLS = juego1.urlImg();
@@ -54,7 +51,6 @@ public class GUI_Juego1 extends javax.swing.JFrame {
                 URL imagen = new URL(listaURLS.get(i));
                 ImageIcon icono = new ImageIcon(imagen);
                 cuadro.setIcon(icono);
-
             } catch (MalformedURLException e) {
                 e.printStackTrace();
                 throw e;
@@ -67,13 +63,12 @@ public class GUI_Juego1 extends javax.swing.JFrame {
         JPanel panelNombres = new JPanel(new GridLayout(2, 0));
         panelContenedor.add(panelNombres);
         List<String> listaNombres = juego1.nombreObras();
-        List<String> listaAutores = juego1.autoresObra(GUI_Juego1.dao);
+        List<String> listaAutores = juego1.autoresObra(dao);
         int numeroCuadros = 10;
 
         for (int i = 0; i < numeroCuadros; i++) {
             String mensaje = listaNombres.get(i) + "\n" + listaAutores.get(i);
-            JLabel cuadro = new JLabel();
-
+            JLabel cuadro = new JLabel(mensaje);
             panelNombres.add(cuadro);
         }
     }
@@ -96,37 +91,37 @@ public class GUI_Juego1 extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(GUI_Juego1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(GUI_Juego1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(GUI_Juego1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(GUI_Juego1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new GUI_Juego1().setVisible(true);
-//            }
-//        });
-//    }
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(GUI_Juego1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(GUI_Juego1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(GUI_Juego1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(GUI_Juego1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new GUI_Juego1().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
