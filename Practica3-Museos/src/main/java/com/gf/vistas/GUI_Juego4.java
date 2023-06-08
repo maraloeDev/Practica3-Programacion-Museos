@@ -6,7 +6,6 @@ package com.gf.vistas;
 
 import com.gf.controles.Juego4;
 import com.gf.dao.Dao;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.net.MalformedURLException;
@@ -14,11 +13,9 @@ import java.net.URL;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
 /**
  *
@@ -26,9 +23,9 @@ import javax.swing.SwingConstants;
  */
 public class GUI_Juego4 extends javax.swing.JFrame {
 
-    private static JPanel panelContenedor = new JPanel();
+    private static final JPanel panelContenedor = new JPanel();
     private static Juego4 juego4;
-    private static Dao dao = new Dao();
+    private static final Dao dao = new Dao();
 
     public GUI_Juego4() {
         try {
@@ -64,7 +61,6 @@ public class GUI_Juego4 extends javax.swing.JFrame {
                 Image imagen = icono.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
                 cuadro.setIcon(new ImageIcon(imagen));
             } catch (MalformedURLException e) {
-                e.printStackTrace();
                 throw e;
             }
             panelCuadros.add(cuadro);
@@ -111,19 +107,11 @@ public class GUI_Juego4 extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUI_Juego4.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUI_Juego4.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUI_Juego4.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(GUI_Juego4.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GUI_Juego4().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new GUI_Juego4().setVisible(true);
         });
     }
 
