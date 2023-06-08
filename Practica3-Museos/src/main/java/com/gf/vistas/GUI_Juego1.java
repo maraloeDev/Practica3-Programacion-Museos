@@ -7,30 +7,31 @@ package com.gf.vistas;
 import com.gf.controles.Juego1;
 import com.gf.dao.Dao;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.datatransfer.StringSelection;
-import java.awt.datatransfer.Transferable;
-import java.awt.dnd.DnDConstants;
-import javax.swing.TransferHandler;
-import java.awt.dnd.DragGestureEvent;
-import java.awt.dnd.DragGestureListener;
-import java.awt.dnd.DragSource;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
+
 /**
  *
  * @author Eduardo Martín-Sonseca Mario Ortuñez
@@ -41,34 +42,49 @@ import javax.swing.SwingConstants;
  * genéricas, hay que adivinar su autor
  *
  */
-public class GUI_Juego1 extends JFrame {
+public class GUI_Juego1 extends javax.swing.JFrame {
 
-    private static final JPanel panelContenedor = new JPanel(new GridLayout(0, 2));
-    private static Juego1 juego1;
-    private static final Dao dao = new Dao();
-    private static JLabel nombreArrastrado; // Almacena el JLabel de nombre arrastrado
+    private final JPanel panelContenedor = new JPanel(new GridLayout(2, 2));
+    private final JPanel panelDatos = new JPanel(new GridLayout(0, 2));
+    private final JPanel panelCuadros = new JPanel(new GridLayout(0, 2));
+    private final JPanel panelBoton = new JPanel(new FlowLayout());
+    private final JPanel panelContador = new JPanel(new FlowLayout());
+
+    private Juego1 juego1;
+    private final Dao dao = new Dao();
+
+    private int tiempoContador = 360;
+    private Timer timer;
+
+    private final List<String> datosColocados = new ArrayList<>();
+    private int cuadrosAcertados = 0;
 
     public GUI_Juego1() {
         initComponents();
         setFrame();
-        GUI_Juego1.juego1 = new Juego1(dao);
-        try {
-            insertarCuadros();
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(GUI_Juego1.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        insertarNombre();
+        juego1 = new Juego1(dao);
     }
 
     private void setFrame() {
-        this.setTitle("Juego 1");
-        this.setLocationRelativeTo(null);
-        this.setContentPane(panelContenedor);
+        setTitle("Juego 1");
+        setLocationRelativeTo(null);
+        setContentPane(panelContenedor);
+
+        panelContenedor.add(panelCuadros);
+        panelContenedor.add(panelDatos);
+        panelContenedor.add(panelBoton);
+        panelContenedor.add(panelContador);
+
+        try {
+            rellenarPanelCuadros();
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(GUI_Juego1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        rellenarPanelDatos();
+        rellenarPanelBoton();
     }
 
-    public static void insertarCuadros() throws MalformedURLException {
-        JPanel panelCuadros = new JPanel(new GridLayout(0, 2));
-        panelContenedor.add(panelCuadros);
+    public void rellenarPanelCuadros() throws MalformedURLException {
         List<String> listaURLS = juego1.urlImg();
         int numeroCuadros = 10;
 
@@ -83,27 +99,25 @@ public class GUI_Juego1 extends JFrame {
             } catch (MalformedURLException e) {
                 throw e;
             }
-
-            // Establecer borde predeterminado para los cuadros
-            cuadro.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
             panelCuadros.add(cuadro);
         }
     }
 
-    public static void insertarNombre() {
-        JPanel panelDatos = new JPanel(new GridLayout(0, 2));
-        panelContenedor.add(panelDatos);
-
+    public void rellenarPanelDatos() {
         List<String> listaNombres = juego1.nombreObras();
         List<String> listaAutores = juego1.autoresObra(dao);
+        List<String> listaDatos = new ArrayList<>();
+
         int numeroCuadros = 10;
+        for (int i = 0; i < numeroCuadros; i++) {
+            datosColocados.add("<html> <h3>" + listaNombres.get(i) + " </h3><br>" + listaAutores.get(i) + "</html>");
+            listaDatos.add("<html> <h3>" + listaNombres.get(i) + " </h3><br>" + listaAutores.get(i) + "</html>");
+        }
+
+        Collections.shuffle(listaDatos);
 
         for (int i = 0; i < numeroCuadros; i++) {
-            String nombre = listaNombres.get(i);
-            String autor = listaAutores.get(i);
-            String mensaje = "<html> <h3>" + nombre + " </h3><br>" + autor + "</html>";
-            JLabel datosCuadro = new JLabel(mensaje);
+            JLabel datosCuadro = new JLabel(listaDatos.get(i));
 
             Color colorNota = new Color(250, 235, 175);
             datosCuadro.setBorder(BorderFactory.createLineBorder(Color.ORANGE));
@@ -115,30 +129,63 @@ public class GUI_Juego1 extends JFrame {
 
             datosCuadro.setHorizontalAlignment(SwingConstants.CENTER);
 
-            // Establecer TransferHandler para permitir el arrastre y la transferencia de datos
-            datosCuadro.setTransferHandler(new TransferHandler("text"));
-
-            // Agregar MouseListener para detectar el inicio y el final del arrastre
-            datosCuadro.addMouseListener(new MouseAdapter() {
+            datosCuadro.addMouseMotionListener(new MouseAdapter() {
                 @Override
-                public void mousePressed(MouseEvent e) {
-                    nombreArrastrado = (JLabel) e.getSource(); // Almacenar el nombre arrastrado
-                    nombreArrastrado.setBackground(Color.ORANGE); // Cambiar el color de fondo
-                }
-
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                    nombreArrastrado = null; // Restaurar el nombre arrastrado
-                    datosCuadro.setBackground(colorNota); // Restaurar el color de fondo original
+                public void mouseDragged(MouseEvent e) {
+                    datosCuadro.setLocation(e.getX() + datosCuadro.getX() - datosCuadro.getWidth() / 2,
+                            e.getY() + datosCuadro.getY() - datosCuadro.getHeight() / 2);
                 }
             });
 
-            // Agregar DragGestureListener para permitir el arrastre del JLabel de nombre
-            DragSource dragSource = DragSource.getDefaultDragSource();
-            dragSource.createDefaultDragGestureRecognizer(datosCuadro, DnDConstants.ACTION_COPY, new NombreDragGestureListener());
-
             panelDatos.add(datosCuadro);
         }
+    }
+
+    public void rellenarPanelBoton() {
+        JButton botonOk = new JButton("OK");
+        botonOk.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int contadorCuadro = 1;
+                for (Component cuadro : panelCuadros.getComponents()) {
+                    if (cuadro instanceof JLabel jLabel) {
+                        for (Component dato : panelDatos.getComponents()) {
+                            if (cuadro.getBounds().contains(dato.getLocation())) {
+                                if (dato.getName().equals(datosColocados.get(contadorCuadro))) {
+                                    jLabel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+                                    cuadrosAcertados++;
+                                } else {
+                                    jLabel.setBorder(BorderFactory.createLineBorder(Color.RED));
+                                }
+                            }
+                        }
+                    }
+                    contadorCuadro++;
+                }
+            }
+        });
+        panelBoton.add(botonOk);
+
+        botonOk.setVerticalAlignment(SwingConstants.CENTER);
+        botonOk.setHorizontalAlignment(SwingConstants.CENTER);
+    }
+
+    public void rellenarPanelContador() {
+        JLabel contador = new JLabel();
+        ActionListener actionListener = (ActionEvent event) -> {
+            tiempoContador--;
+            contador.setName(tiempoContador + " s");
+
+            if (tiempoContador <= 0) {
+                timer.stop();
+                JOptionPane.showMessageDialog(null, "Se acabó el tiempo");
+            }
+        };
+
+        timer = new Timer(1000, actionListener);
+        timer.start();
+
+        panelContador.add(contador);
     }
 
     /**
@@ -197,34 +244,4 @@ public class GUI_Juego1 extends JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-    // Clase interna para el TransferHandler
-    private static class NombreTransferHandler extends TransferHandler {
-
-        @Override
-        public int getSourceActions(JComponent c) {
-            return TransferHandler.COPY;
-        }
-
-        @Override
-        protected Transferable createTransferable(JComponent c) {
-            return new StringSelection(nombreArrastrado.getText());
-        }
-
-        @Override
-        protected void exportDone(JComponent source, Transferable data, int action) {
-            if (action == TransferHandler.MOVE) {
-                nombreArrastrado.setText("");
-            }
-        }
-    }
-
-    // Clase interna para el DragGestureListener
-    private static class NombreDragGestureListener implements DragGestureListener {
-
-        @Override
-        public void dragGestureRecognized(DragGestureEvent event) {
-            NombreTransferHandler handler = new NombreTransferHandler();
-            handler.exportAsDrag(nombreArrastrado, event.getTriggerEvent(), TransferHandler.COPY);
-        }
-    }
 }
