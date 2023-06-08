@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  *
- * @author Mario Ortuñez
+ * @author Eduardo Martín-Sonseca Mario Ortuñez
  *
  * Clase del segundo juego
  *
@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class Juego2 {
     private final List<Museos> museos = new ArrayList<>(); // Variable que guarda los museos del juego
-    private final List<Museos> museosExistentes = new ArrayList<>(); // Variable que guarda los museos que son verdaderos
+    private final List<Museos> museosExistentes = new ArrayList<>(); // Variable que guarda los museos existentes en el juego
 
     public Juego2(Dao dao) {
         List<Museos> museosFalsos = new ArrayList<>(); // Variable para almacenar los museos falsos

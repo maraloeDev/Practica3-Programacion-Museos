@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  *
- * @author Eduardo Martín-SonsecaMario Ortuñez
+ * @author Eduardo Martín-Sonseca Mario Ortuñez
  *
  * Clase del primer juego
  *
@@ -29,7 +29,7 @@ public class Juego1 {
         List<Obras> obrasTodas = dao.getObras(); // Variable donde guardamos todas las obras
         int numeroObrasJuego = 10;
 
-        Collections.shuffle(obrasTodas); // Desordenamos
+        Collections.shuffle(obrasTodas); // Desordenamos la lista de obras
         int obrasTotales = obrasTodas.size();
         int obrasAgregadas = Math.min(numeroObrasJuego, obrasTotales);
         obras.addAll(obrasTodas.subList(0, obrasAgregadas)); // Añadimos a la lista las obras para el juego
@@ -55,7 +55,7 @@ public class Juego1 {
         return urls;
     }
 
-    // Lista de los países donde se encuentran las obras del juego 4 mediante su museo.
+    // Obtener los nombres de los autores de las obras del juego 1 
     public List<String> autoresObra(Dao dao) {
         List<String> autores = new ArrayList<>();
         for (Obras obra : obras) {

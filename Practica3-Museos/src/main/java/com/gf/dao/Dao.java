@@ -26,15 +26,20 @@ import javax.swing.JOptionPane;
  */
 public class Dao {
 
-    private List<Autores> listaAutores = new ArrayList<>(); // Almacena la lista de autores de la base de datos
-    private List<Museos> listaMuseos = new ArrayList<>(); // Almacena la lista de museos de la base de datos
-    private List<Obras> listaObras = new ArrayList<>(); // Almacena la lista de obras de la base de datos
-    private List<Paises> listaPaises = new ArrayList<>(); // Almacena la lista de países de la base de datos
-    private List<Ranking> listaRanking = new ArrayList<>(); // Almacena la lista de puntuaciones del ranking
+    // Almacena la lista de autores de la base de datos
+    private List<Autores> listaAutores = new ArrayList<>();
+    // Almacena la lista de museos de la base de datos
+    private List<Museos> listaMuseos = new ArrayList<>();
+    // Almacena la lista de obras de la base de datos
+    private List<Obras> listaObras = new ArrayList<>();
+    // Almacena la lista de países de la base de datos
+    private List<Paises> listaPaises = new ArrayList<>();
+    // Almacena la lista de puntuaciones del ranking
+    private List<Ranking> listaRanking = new ArrayList<>();
 
     public Dao() {
-        
-        try ( Connection conn = ConexionBD.getConn()) {
+        // Establecer conexión con la base de datos y recuperar datos
+        try (Connection conn = ConexionBD.getConn()) {
             Statement st = conn.createStatement();
             ResultSet rs;
 
