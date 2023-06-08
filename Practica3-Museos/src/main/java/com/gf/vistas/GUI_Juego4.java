@@ -22,7 +22,7 @@ import javax.swing.SwingConstants;
 
 /**
  *
- * @author Eduardo
+ * @author Eduardo Martín-Sonseca y Mario Ortuñez
  */
 public class GUI_Juego4 extends javax.swing.JFrame {
 

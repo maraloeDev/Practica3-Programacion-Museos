@@ -6,7 +6,7 @@ package com.gf.vistas;
 
 /**
  *
- * @author Eduardo
+ * @author Eduardo Martín-Sonseca y Mario Ortuñez
  */
 public class GUI_JuegoRanking extends javax.swing.JFrame {
 

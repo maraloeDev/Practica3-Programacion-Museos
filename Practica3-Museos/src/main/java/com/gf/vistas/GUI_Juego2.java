@@ -7,110 +7,123 @@ package com.gf.vistas;
 import com.gf.controles.Juego2;
 import com.gf.dao.Dao;
 import com.gf.modelos.Museos;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JLabel;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
  *
- * @author Eduardo Martin-Sonseca Mario Ortuñes Sanz
+ *  @author Eduardo Martín-Sonseca y Mario Ortuñez
  */
 public class GUI_Juego2 extends javax.swing.JFrame {
 
+    /**
+     * Creates new form GUPp2
+     */
     private static final Dao dao = new Dao();
     private static final Juego2 juego2 = new Juego2(dao);
-    private static final JPanel panelContenedor = new JPanel(new GridLayout(0, 1));
-    private int contador = 0;
-    private static final JLabel labelResultado = new JLabel("ES CORRECTO!!");
-    private static final JButton botonComprobar = new JButton("Comprobar");
-    static List<String> museosSeleccionados = new ArrayList<>();
+    private static final int MAX_SELECTIONS = 3; // Número máximo de selecciones permitidas
+    private int currentSelections = 0; // Contador de selecciones actuales
+    JPanel panelContenedor = new JPanel(new GridLayout(0, 1));
+    JButton btnComprobar = new JButton("Comprobar");
 
-    /**
-     * Creates new form GUI_Juego2
-     */
     public GUI_Juego2() {
         initComponents();
         setFrame();
-        control();
+        creacion();
+
     }
 
     private void setFrame() {
         this.setTitle("Verdadero/Falso de Museos");
         this.setContentPane(panelContenedor);
         this.setLocationRelativeTo(null);
-        labelResultado.setVisible(false);
-        panelContenedor.add(labelResultado);
+        this.setPreferredSize(new Dimension(500, 500));
+        this.setContentPane(panelContenedor);
 
-        botonComprobar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                for (Component componente : panelContenedor.getComponents()) {
-                    if (componente instanceof JCheckBox) {
-                        JCheckBox checkbox = (JCheckBox) componente;
-                        if (checkbox.isSelected()) {
-                            museosSeleccionados.add(checkbox.getText());
-                            labelResultado.setVisible(true);
-                        } else {
-                            labelResultado.setVisible(false);
-                        }
-                    }
-                }
-                panelContenedor.revalidate();
-                panelContenedor.repaint();
-
-                if (!todosMuseosVerdaderos(museosSeleccionados)) {
-                    JOptionPane.showMessageDialog(GUI_Juego2.this, "Enhorabuena, todos los museos seleccionados son verdaderos");
-                } else {
-                    JOptionPane.showMessageDialog(GUI_Juego2.this, "Tienes que seleccionar un maximo de 3 museos");
-                }
-            }
+        btnComprobar.addActionListener((ActionEvent e) -> {
+            comprobarSeleccionados();
         });
     }
 
-    private boolean todosMuseosVerdaderos(List<String> museosSeleccionados) {
-        for (String museoSeleccionado : museosSeleccionados) {
-            Museos museo = (Museos) juego2.getMuseos(museoSeleccionado); // Obtengo el objeto Museo
-            if (museo == null || museo.isExiste_museo()) {
-                return false;
-            }
-        }
-        return true;
-    }
+    private void creacion() {
+        List<Museos> nombresObrasArte = dao.getMuseos(); // Obtener los nombres de las obras de arte desde la base de datos
 
-    private void control() {
-        List<JCheckBox> checkboxes = new ArrayList<>();
-
-        // Obtener la lista de nombres de museos de la base de datos
-        List<String> nombresMuseosBD = juego2.getNombresMuseos();
-
-        for (String museo : nombresMuseosBD) {
+        for (String museo : juego2.getNombresMuseos()) {
             JCheckBox checkBoxMuseo = new JCheckBox(museo);
-
-            // Verificar si el nombre del museo está en la lista de nombres de museos
-            if (juego2.getNombresMuseos() != null) {
-                checkBoxMuseo.setSelected(true); // Marcar como seleccionado por defecto
-                contador++;
-            }
-
-            checkboxes.add(checkBoxMuseo);
-            checkBoxMuseo.addActionListener((ActionEvent e) -> {
-                // Resto del código
-            });
             panelContenedor.add(checkBoxMuseo);
 
+            checkBoxMuseo.addActionListener((ActionEvent e) -> {
+                JCheckBox selectedCheckbox = (JCheckBox) e.getSource();
+                String nombreObraArte = selectedCheckbox.getText();
+
+                if (selectedCheckbox.isSelected()) {
+                    currentSelections++;
+                    if (currentSelections >= MAX_SELECTIONS) {
+                        disableRemainingCheckboxes();
+                    }
+                } else {
+                    currentSelections--;
+                    enableAllCheckboxes();
+                }
+
+            });
+            panelContenedor.add(btnComprobar);
         }
-        panelContenedor.add(botonComprobar);
     }
 
+    private void disableRemainingCheckboxes() {
+        Component[] components = panelContenedor.getComponents();
+        for (Component component : components) {
+            if (component instanceof JCheckBox) {
+                JCheckBox checkbox = (JCheckBox) component;
+                if (!checkbox.isSelected()) {
+                    checkbox.setEnabled(false);
+                }
+            }
+        }
+    }
+
+    private void enableAllCheckboxes() {
+        Component[] components = panelContenedor.getComponents();
+        for (Component component : components) {
+            if (component instanceof JCheckBox) {
+                JCheckBox checkbox = (JCheckBox) component;
+                checkbox.setEnabled(true);
+            }
+        }
+    }
+
+    private void comprobarSeleccionados() {
+        Component[] components = panelContenedor.getComponents();
+        for (Component component : components) {
+            if (component instanceof JCheckBox) {
+                JCheckBox checkbox = (JCheckBox) component;
+                if (checkbox.isSelected()) {
+                    checkbox.setBackground(Color.GREEN);
+                } else {
+                    checkbox.setBackground(null);
+                }
+            }
+        }
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -121,11 +134,11 @@ public class GUI_Juego2 extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 626, Short.MAX_VALUE)
+            .addGap(0, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 462, Short.MAX_VALUE)
+            .addGap(0, 300, Short.MAX_VALUE)
         );
 
         pack();
@@ -145,30 +158,25 @@ public class GUI_Juego2 extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUI_Juego2.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            java.util.logging.Logger.getLogger(GUI_Juego2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUI_Juego2.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            java.util.logging.Logger.getLogger(GUI_Juego2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUI_Juego2.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            java.util.logging.Logger.getLogger(GUI_Juego2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUI_Juego2.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI_Juego2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
-            new GUI_Juego2().setVisible(true);
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new GUI_Juego2().setVisible(true);
+            }
         });
     }
 

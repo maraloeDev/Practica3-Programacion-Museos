@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Eduardo Martin-Sonseca && Mario Ortuñez Sanz
+ * @author Eduardo Martín-Sonseca y Mario Ortuñez
  */
 public class ConexionBD {
 
@@ -24,6 +24,7 @@ public class ConexionBD {
     public static void conectarBD() {
         try {
             conn = DriverManager.getConnection(url, USER_SQL, PASSWORD_SQL);
+            System.out.println("Se conecto");
         } catch (SQLException ex) {
             Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Base de datos no conectada");
