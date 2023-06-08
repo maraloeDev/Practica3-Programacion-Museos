@@ -10,10 +10,15 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.datatransfer.StringSelection;
-import java.awt.datatransfer.Transferable;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
+import java.awt.dnd.DnDConstants;
+import javax.swing.TransferHandler;
+import java.awt.dnd.DragGestureEvent;
+import java.awt.dnd.DragGestureListener;
+import java.awt.dnd.DragSource;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
@@ -22,23 +27,21 @@ import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.TransferHandler;
-
 /**
  *
  * @author Eduardo Martín-Sonseca Mario Ortuñez
- * 
-  * Clase del primer juego
+ *
+ * Clase del primer juego
  *
  * Enunciado: 1. ¿Quién lo hizo? A partir de unas imágenes de obras de arte
- * genéricas, hay que adivinar su autor 
- * 
+ * genéricas, hay que adivinar su autor
+ *
  */
-
-public class GUI_Juego1 extends javax.swing.JFrame {
+public class GUI_Juego1 extends JFrame {
 
     private static final JPanel panelContenedor = new JPanel(new GridLayout(0, 2));
     private static Juego1 juego1;
@@ -130,6 +133,10 @@ public class GUI_Juego1 extends javax.swing.JFrame {
                 }
             });
 
+            // Agregar DragGestureListener para permitir el arrastre del JLabel de nombre
+            DragSource dragSource = DragSource.getDefaultDragSource();
+            dragSource.createDefaultDragGestureRecognizer(datosCuadro, DnDConstants.ACTION_COPY, new NombreDragGestureListener());
+
             panelDatos.add(datosCuadro);
         }
     }
@@ -179,7 +186,7 @@ public class GUI_Juego1 extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(GUI_Juego1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         //</editor-fold>
 
         /* Create and display the form */
@@ -190,7 +197,6 @@ public class GUI_Juego1 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-    
     // Clase interna para el TransferHandler
     private static class NombreTransferHandler extends TransferHandler {
 
@@ -201,7 +207,24 @@ public class GUI_Juego1 extends javax.swing.JFrame {
 
         @Override
         protected Transferable createTransferable(JComponent c) {
-            return new StringSelection(((JLabel) c).getText());
+            return new StringSelection(nombreArrastrado.getText());
+        }
+
+        @Override
+        protected void exportDone(JComponent source, Transferable data, int action) {
+            if (action == TransferHandler.MOVE) {
+                nombreArrastrado.setText("");
+            }
+        }
+    }
+
+    // Clase interna para el DragGestureListener
+    private static class NombreDragGestureListener implements DragGestureListener {
+
+        @Override
+        public void dragGestureRecognized(DragGestureEvent event) {
+            NombreTransferHandler handler = new NombreTransferHandler();
+            handler.exportAsDrag(nombreArrastrado, event.getTriggerEvent(), TransferHandler.COPY);
         }
     }
 }
