@@ -34,10 +34,10 @@ public class GUI_Juego1 extends javax.swing.JFrame {
         initComponents();
         setFrame();
         try {
-            panelCuadros = controlJuego1.rellenarPanelCuadros();
-            panelDatos = controlJuego1.rellenarPanelDatos();
-            panelBoton = controlJuego1.rellenarPanelBoton();
-            panelContador = controlJuego1.rellenarPanelContador();
+            panelCuadros.add(controlJuego1.rellenarPanelCuadros()) ;
+            panelDatos.add(controlJuego1.rellenarPanelDatos());
+            panelBoton.add(controlJuego1.rellenarPanelBoton());
+            panelContador.add(controlJuego1.rellenarPanelContador());
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Algo fallo en el juego: ¿Quién lo hizo?");
         }

@@ -4,112 +4,19 @@
  */
 package com.gf.vistas;
 
-import com.gf.controles.Juego1;
-import com.gf.controles.Juego2;
-import com.gf.controles.Juego3;
-import static com.gf.controles.Juego3.seleccionarGF;
-import com.gf.dao.Dao;
-import com.gf.modelos.Autores;
-import com.gf.modelos.Obras;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextArea;
-
 /**
  *
  * @author Eduardo Martín-Sonseca y Mario Ortuñez
  */
 public class GUI_Juego3 extends javax.swing.JFrame {
-    
-private JLabel imagen1Label, imagen2Label;
-    private JButton btnAdivinar;
-    private JTextArea resultadoTextArea;
-private static final Dao dao = new Dao();
-    private static final Juego3 juego3 = new Juego3(dao);
-    private static List<Obras> obrasGFLista = new ArrayList<>();
-    private static List<Obras> obrasNoLista = new ArrayList<>();
-    
-    private File[] imagenes;
     /**
      * Creates new form GUI_Juego3
      */
     public GUI_Juego3() {
         initComponents();
-        setFrame();
     }
-    private void setFrame() {
-        setTitle("Gregorio Fernández.");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new FlowLayout());
-
-        // Cargar las imágenes de la base de datos
-        File f = new File("imagenes");
-        imagenes = f.listFiles();
-
-        // Mostrar las dos imágenes al azar
-        for (Obras obra : dao.getObras()) {
-            if (obra.getId_autor() == GF.getId_autor()) {
-                obrasGFLista.add(obra);
-                for (Obras obraPareja : dao.getObras()) {
-                    if (obraPareja.getNombre_obra().equals(obra.getNombre_obra())) {
-                        obrasNoLista.add(obraPareja);
-                    }
-                }
-            }
-        }
-
-        imagen1Label = new JLabel();
-        imagen2Label = new JLabel();
-        
-        ImageIcon imagen1 = new ImageIcon(obrasGFLista.get(0).getDescripcion_obra());
-        ImageIcon imagen2 = new ImageIcon(obrasNoLista.get(0).getDescripcion_obra());
-        imagen1Label.setIcon(imagen1);
-        imagen2Label.setIcon(imagen2);
-        
-        add(imagen1Label);
-        add(imagen2Label);
-
-        // Botón para adivinar
-        btnAdivinar = new JButton("Adivinar");
-        add(btnAdivinar);
-
-        // Área de texto para mostrar el resultado
-        resultadoTextArea = new JTextArea(5, 20);
-        resultadoTextArea.setEditable(false);
-        add(resultadoTextArea);
-
-        pack();
-        setVisible(true);
-    }
-
-    public static Autores seleccionarGF(List<Autores> autoresLista) {
-        Autores GF = null;
-        for (Autores autor : autoresLista) {
-            if (autor.getNombre_autor().equals("Gregorio Fernandez")) {
-                GF = autor;
-                break;
-            }
-        }
-        return GF;
-    }
-    public void actionPerformed(ActionEvent e) {
-        boolean mismoAutor = obrasGFLista.get(0).getId_autor()== obrasNoLista.get(0).getId_autor();
-        
-        if (mismoAutor) {
-            resultadoTextArea.setText("¡Correcto! Ambas imágenes son de Gregorio Fernández.");
-        } else {
-            resultadoTextArea.setText("Incorrecto. Las imágenes son de diferentes autores.");
-        }
-        
-        btnAdivinar.setEnabled(false);
-    }
+     
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
