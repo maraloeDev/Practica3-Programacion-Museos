@@ -34,7 +34,11 @@ public class GUI_Juego1 extends javax.swing.JFrame {
         initComponents();
         setFrame();
         try {
+<<<<<<< Updated upstream
             panelCuadros.add(controlJuego1.rellenarPanelCuadros()) ;
+=======
+            panelCuadros.add(controlJuego1.rellenarPanelCuadros());
+>>>>>>> Stashed changes
             panelDatos.add(controlJuego1.rellenarPanelDatos());
             panelBoton.add(controlJuego1.rellenarPanelBoton());
             panelContador.add(controlJuego1.rellenarPanelContador());
