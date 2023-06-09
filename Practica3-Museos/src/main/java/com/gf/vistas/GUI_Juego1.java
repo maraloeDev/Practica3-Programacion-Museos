@@ -64,9 +64,7 @@ public class GUI_Juego1 extends JFrame {
         }
     }
 
-    private void initComponents() {
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-    }
+   
 
     private void setFrame() {
         setTitle("¿Quién lo hizo?");
