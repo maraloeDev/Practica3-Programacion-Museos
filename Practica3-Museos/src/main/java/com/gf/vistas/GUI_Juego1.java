@@ -4,33 +4,18 @@
  */
 package com.gf.vistas;
 
-import com.gf.controles.Juego1;
-import com.gf.dao.Dao;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+import com.gf.controles.ControlJuego1;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
+import java.awt.FlowLayout;
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.Color;
 import javax.swing.Timer;
+import javax.swing.JOptionPane;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import javax.swing.BorderFactory;
 
 /**
  *
@@ -42,150 +27,79 @@ import javax.swing.Timer;
  * genéricas, hay que adivinar su autor
  *
  */
-public class GUI_Juego1 extends javax.swing.JFrame {
+public class GUI_Juego1 extends JFrame {
 
-    private final JPanel panelContenedor = new JPanel(new GridLayout(2, 2));
-    private final JPanel panelDatos = new JPanel(new GridLayout(0, 2));
-    private final JPanel panelCuadros = new JPanel(new GridLayout(0, 2));
-    private final JPanel panelBoton = new JPanel(new FlowLayout());
-    private final JPanel panelContador = new JPanel(new FlowLayout());
+    private final JPanel panelContenedor = new JPanel(new BorderLayout());
+    private JPanel panelDatos;
+    private JPanel panelCuadros;
+    private JPanel panelBoton;
+    private JPanel panelContador;
 
-    private Juego1 juego1;
-    private final Dao dao = new Dao();
+    private ControlJuego1 juego1 = new ControlJuego1();
 
     private int tiempoContador = 360;
     private Timer timer;
 
-    private final List<String> datosColocados = new ArrayList<>();
-    private int cuadrosAcertados = 0;
+    private JLabel labelContador;
 
     public GUI_Juego1() {
         initComponents();
         setFrame();
-        juego1 = new Juego1(dao);
+        try {
+            panelCuadros = juego1.rellenarPanelCuadros();
+            panelDatos = juego1.rellenarPanelDatos();
+            panelBoton = juego1.rellenarPanelBoton();
+            panelContador = juego1.rellenarPanelContador();
+
+            panelContador.setLayout(new FlowLayout(FlowLayout.CENTER));
+            labelContador = new JLabel("", SwingConstants.CENTER);
+            labelContador.setFont(new Font("Arial", Font.BOLD, 50));
+            labelContador.setForeground(Color.RED);
+            labelContador.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+            panelContador.add(labelContador);
+
+            iniciarContador();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Algo falló en el juego: ¿Quién lo hizo?");
+        }
+    }
+
+    private void initComponents() {
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     }
 
     private void setFrame() {
-        setTitle("Juego 1");
+        setTitle("¿Quién lo hizo?");
         setLocationRelativeTo(null);
         setContentPane(panelContenedor);
 
-        panelContenedor.add(panelCuadros);
-        panelContenedor.add(panelDatos);
-        panelContenedor.add(panelBoton);
-        panelContenedor.add(panelContador);
+        panelContenedor.add(panelCuadros, BorderLayout.CENTER);
+        panelContenedor.add(panelDatos, BorderLayout.EAST);
+        panelContenedor.add(panelBoton, BorderLayout.SOUTH);
+        panelContenedor.add(panelContador, BorderLayout.WEST);
 
-        try {
-            rellenarPanelCuadros();
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(GUI_Juego1.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        rellenarPanelDatos();
-        rellenarPanelBoton();
+        pack();
     }
 
-    public void rellenarPanelCuadros() throws MalformedURLException {
-        List<String> listaURLS = juego1.urlImg();
-        int numeroCuadros = 10;
-
-        for (int i = 0; i < numeroCuadros; i++) {
-            JLabel cuadro = new JLabel();
-            try {
-                URL imagenUrl = new URL(listaURLS.get(i));
-                ImageIcon icono = new ImageIcon(imagenUrl);
-                Image imagen = icono.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-                cuadro.setIcon(new ImageIcon(imagen));
-
-            } catch (MalformedURLException e) {
-                throw e;
-            }
-            panelCuadros.add(cuadro);
-        }
-    }
-
-    public void rellenarPanelDatos() {
-        List<String> listaNombres = juego1.nombreObras();
-        List<String> listaAutores = juego1.autoresObra(dao);
-        List<String> listaDatos = new ArrayList<>();
-
-        int numeroCuadros = 10;
-        for (int i = 0; i < numeroCuadros; i++) {
-            datosColocados.add("<html> <h3>" + listaNombres.get(i) + " </h3><br>" + listaAutores.get(i) + "</html>");
-            listaDatos.add("<html> <h3>" + listaNombres.get(i) + " </h3><br>" + listaAutores.get(i) + "</html>");
-        }
-
-        Collections.shuffle(listaDatos);
-
-        for (int i = 0; i < numeroCuadros; i++) {
-            JLabel datosCuadro = new JLabel(listaDatos.get(i));
-
-            Color colorNota = new Color(250, 235, 175);
-            datosCuadro.setBorder(BorderFactory.createLineBorder(Color.ORANGE));
-            datosCuadro.setOpaque(true);
-            datosCuadro.setBackground(colorNota);
-
-            Dimension dimension = new Dimension(200, 50);
-            datosCuadro.setPreferredSize(dimension);
-
-            datosCuadro.setHorizontalAlignment(SwingConstants.CENTER);
-
-            datosCuadro.addMouseMotionListener(new MouseAdapter() {
-                @Override
-                public void mouseDragged(MouseEvent e) {
-                    datosCuadro.setLocation(e.getX() + datosCuadro.getX() - datosCuadro.getWidth() / 2,
-                            e.getY() + datosCuadro.getY() - datosCuadro.getHeight() / 2);
-                }
-            });
-
-            panelDatos.add(datosCuadro);
-        }
-    }
-
-    public void rellenarPanelBoton() {
-        JButton botonOk = new JButton("OK");
-        botonOk.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int contadorCuadro = 1;
-                for (Component cuadro : panelCuadros.getComponents()) {
-                    if (cuadro instanceof JLabel jLabel) {
-                        for (Component dato : panelDatos.getComponents()) {
-                            if (cuadro.getBounds().contains(dato.getLocation())) {
-                                if (dato.getName().equals(datosColocados.get(contadorCuadro))) {
-                                    jLabel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
-                                    cuadrosAcertados++;
-                                } else {
-                                    jLabel.setBorder(BorderFactory.createLineBorder(Color.RED));
-                                }
-                            }
-                        }
-                    }
-                    contadorCuadro++;
-                }
-            }
-        });
-        panelBoton.add(botonOk);
-
-        botonOk.setVerticalAlignment(SwingConstants.CENTER);
-        botonOk.setHorizontalAlignment(SwingConstants.CENTER);
-    }
-
-    public void rellenarPanelContador() {
-        JLabel contador = new JLabel();
-        ActionListener actionListener = (ActionEvent event) -> {
+    private void iniciarContador() {
+        timer = new Timer(1000, e -> {
             tiempoContador--;
-            contador.setName(tiempoContador + " s");
+            actualizarContador();
 
             if (tiempoContador <= 0) {
                 timer.stop();
-                JOptionPane.showMessageDialog(null, "Se acabó el tiempo");
+                // Realizar acciones cuando el tiempo se agota
             }
-        };
-
-        timer = new Timer(1000, actionListener);
+        });
         timer.start();
+    }
 
-        panelContador.add(contador);
+    private void actualizarContador() {
+        int minutos = tiempoContador / 60;
+        int segundos = tiempoContador % 60;
+
+        String tiempo = String.format("%02d:%02d", minutos, segundos);
+        labelContador.setText(tiempo);
     }
 
     /**

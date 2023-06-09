@@ -5,166 +5,107 @@
 package com.gf.controles;
 
 import com.gf.dao.Dao;
-import com.gf.modelos.Obras;
-import com.gf.vistas.GUI_Juego1;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import javax.swing.JPanel;
 import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.Timer;
-
 /**
  *
  * @author ortsanma
  */
+
 public class ControlJuego1 {
-    
-    private final JPanel panelCuadros = new JPanel(new GridLayout(0, 2));
-    private final JPanel panelDatos = new JPanel(new GridLayout(0, 2));
-    
+
     private final Dao dao = new Dao();
-    private final MetodosJuego1 juego1 = new MetodosJuego1(dao);
 
-    private int tiempoContador = 360;
-    private Timer timer;
+    private final String[] nombres = {"Nombre 1", "Nombre 2", "Nombre 3", "Nombre 4"};
+    private final String[] imagenes = {"imagen1.png", "imagen2.png", "imagen3.png", "imagen4.png"};
 
-    private final List<String> datosColocados = new ArrayList<>();
-    private int obrasAcertados = 0;
-    private List<Obras> obrasConseguidas = new ArrayList<>();
-    
-    
-    public JPanel rellenarPanelCuadros() throws MalformedURLException {
-        List<String> listaURLS = juego1.urlImg();
-        int numeroCuadros = 10;
+    private JPanel panelCuadros;
+    private JLabel labelNombreArrastrado;
+    private JLabel cuadroSeleccionado;
 
-        for (int i = 0; i < numeroCuadros; i++) {
+    public JPanel rellenarPanelCuadros() {
+        panelCuadros = new JPanel(new GridLayout(2, 2));
+
+        for (int i = 0; i < nombres.length; i++) {
             JLabel cuadro = new JLabel();
-            try {
-                URL imagenUrl = new URL(listaURLS.get(i));
-                ImageIcon icono = new ImageIcon(imagenUrl);
-                Image imagen = icono.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-                cuadro.setIcon(new ImageIcon(imagen));
+            cuadro.setIcon(new ImageIcon(getClass().getResource(imagenes[i])));
+            cuadro.setName(nombres[i]);
+            cuadro.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+            cuadro.setHorizontalAlignment(JLabel.CENTER);
+            cuadro.setVerticalAlignment(JLabel.CENTER);
+            cuadro.setFont(new Font("Arial", Font.BOLD, 20));
 
-            } catch (MalformedURLException e) {
-                throw e;
-            }
+            cuadro.addMouseListener(new MouseAdapter() {
+                public void mousePressed(MouseEvent event) {
+                    cuadroSeleccionado = (JLabel) event.getSource();
+                }
+
+                public void mouseReleased(MouseEvent event) {
+                    if (labelNombreArrastrado != null && cuadroSeleccionado != null) {
+                        String nombreArrastrado = labelNombreArrastrado.getText();
+                        String nombreCuadro = cuadroSeleccionado.getName();
+
+                        if (nombreArrastrado.equals(nombreCuadro)) {
+                            cuadroSeleccionado.setBorder(BorderFactory.createLineBorder(Color.GREEN, 2));
+                        } else {
+                            cuadroSeleccionado.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+                        }
+                    }
+                }
+            });
+
             panelCuadros.add(cuadro);
         }
+
         return panelCuadros;
     }
 
     public JPanel rellenarPanelDatos() {
-        List<String> listaNombres = juego1.nombreObras();
-        List<String> listaAutores = juego1.autoresObra(dao);
-        List<String> listaDatos = new ArrayList<>();
+        JPanel panelDatos = new JPanel(new GridLayout(0, 2));
 
-        int numeroCuadros = 10;
-        for (int i = 0; i < numeroCuadros; i++) {
-            datosColocados.add("<html> <h3>" + listaNombres.get(i) + " </h3><br>" + listaAutores.get(i) + "</html>");
-            listaDatos.add("<html> <h3>" + listaNombres.get(i) + " </h3><br>" + listaAutores.get(i) + "</html>");
-        }
+        for (String nombre : nombres) {
+            JLabel labelNombre = new JLabel(nombre);
+            labelNombre.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+            labelNombre.setHorizontalAlignment(JLabel.CENTER);
+            labelNombre.setVerticalAlignment(JLabel.CENTER);
+            labelNombre.setFont(new Font("Arial", Font.BOLD, 20));
 
-        Collections.shuffle(listaDatos);
+            labelNombre.addMouseListener(new MouseAdapter() {
+                public void mousePressed(MouseEvent event) {
+                    labelNombreArrastrado = (JLabel) event.getSource();
+                }
 
-        for (int i = 0; i < numeroCuadros; i++) {
-            JLabel datosCuadro = new JLabel(listaDatos.get(i));
-
-            Color colorNota = new Color(250, 235, 175);
-            datosCuadro.setBorder(BorderFactory.createLineBorder(Color.ORANGE));
-            datosCuadro.setOpaque(true);
-            datosCuadro.setBackground(colorNota);
-
-            Dimension dimension = new Dimension(200, 50);
-            datosCuadro.setPreferredSize(dimension);
-
-            datosCuadro.setHorizontalAlignment(SwingConstants.CENTER);
-
-            datosCuadro.addMouseMotionListener(new MouseAdapter() {
-                @Override
-                public void mouseDragged(MouseEvent e) {
-                    datosCuadro.setLocation(e.getX() + datosCuadro.getX() - datosCuadro.getWidth() / 2,
-                            e.getY() + datosCuadro.getY() - datosCuadro.getHeight() / 2);
+                public void mouseReleased(MouseEvent event) {
+                    labelNombreArrastrado = null;
                 }
             });
 
-            panelDatos.add(datosCuadro);
+            panelDatos.add(labelNombre);
         }
+
         return panelDatos;
     }
 
     public JPanel rellenarPanelBoton() {
-        JPanel panelBoton = new JPanel(new FlowLayout());
-        JButton botonOk = new JButton("OK");
-        botonOk.addActionListener((ActionEvent e) -> {
-            int contadorCuadro = 1;
-            for (Component cuadro : panelCuadros.getComponents()) {
-                if (cuadro instanceof JLabel jLabel) {
-                    for (Component dato : panelDatos.getComponents()) {
-                        if (cuadro.getBounds().contains(dato.getLocation())) {
-                            if (dato.getName().equals(datosColocados.get(contadorCuadro))) {
-                                jLabel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
-                                obrasAcertados++;
-                            } else {
-                                jLabel.setBorder(BorderFactory.createLineBorder(Color.RED));
-                            }
-                        }
-                    }
-                }
-                contadorCuadro++;
-            }
-            String mensaje = "Has acertado " + obrasAcertados + " cuadros";
-            if(obrasAcertados >= 5){
-                Collections.shuffle(datosColocados);
-                mensaje = mensaje + "\n Conseguistes el cuadro " + datosColocados.get(1);
-            }else{
-                mensaje = mensaje + "Lo siento, no conseguistes ningun cuadro";
-            }
-            if(obrasAcertados >= 7){
-                mensaje = mensaje + "\n y el cuadro " + datosColocados.get(2);
-            }
-            JOptionPane.showMessageDialog(null, mensaje);
-        });
-        panelBoton.add(botonOk);
+        JPanel panelBoton = new JPanel();
 
-        botonOk.setHorizontalAlignment(SwingConstants.CENTER);
+        // Aquí puedes añadir los componentes necesarios para el panel del botón
+
         return panelBoton;
     }
 
     public JPanel rellenarPanelContador() {
-        JPanel panelContador = new JPanel(new FlowLayout());
-        JLabel contador = new JLabel();
-        ActionListener actionListener = (ActionEvent event) -> {
-            tiempoContador--;
-            contador.setName(tiempoContador + " s");
+        JPanel panelContador = new JPanel();
 
-            if (tiempoContador <= 0) {
-                timer.stop();
-                JOptionPane.showMessageDialog(null, "Se acabó el tiempo");
-            }
-        };
+        // Aquí puedes añadir los componentes necesarios para el panel del contador
 
-        timer = new Timer(1000, actionListener);
-        timer.start();
-
-        panelContador.add(contador);
         return panelContador;
     }
 }
