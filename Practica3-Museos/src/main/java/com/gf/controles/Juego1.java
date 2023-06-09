@@ -31,7 +31,7 @@ import java.util.List;
  * obras y los autores de las obras. Los últimos tres métodos recopilan los
  * nombres de las obras y de los autores, ademas de las URLs en listas separadas
  * y las devuelven como resultado.
- *
+ * @author Eduardo Martín-Sonseca y Mario Ortuñez
  */
 public class Juego1 {
 

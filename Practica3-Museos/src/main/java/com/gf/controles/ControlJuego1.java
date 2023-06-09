@@ -16,7 +16,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 /**
  *
- * @author ortsanma
+ * @author Eduardo Martín-Sonseca y Mario Ortuñez
  */
 
 public class ControlJuego1 {

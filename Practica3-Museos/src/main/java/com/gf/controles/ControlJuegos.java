@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  *
- * @author Mario Ortuñez
+ * @author Eduardo Martín-Sonseca y Mario Ortuñez
  */
 public class ControlJuegos {
     
