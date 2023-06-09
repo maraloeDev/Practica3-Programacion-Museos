@@ -4,33 +4,15 @@
  */
 package com.gf.vistas;
 
-import com.gf.controles.Juego1;
-import com.gf.dao.Dao;
-import java.awt.Color;
-import java.awt.Dimension;
+import com.gf.controles.ControlJuego1;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.datatransfer.StringSelection;
-import java.awt.datatransfer.Transferable;
-import java.awt.dnd.DnDConstants;
-import javax.swing.TransferHandler;
-import java.awt.dnd.DragGestureEvent;
-import java.awt.dnd.DragGestureListener;
-import java.awt.dnd.DragSource;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
+
 /**
  *
  * @author Eduardo Martín-Sonseca y Mario Ortuñez
@@ -41,106 +23,40 @@ import javax.swing.SwingConstants;
  * genéricas, hay que adivinar su autor
  *
  */
-public class GUI_Juego1 extends JFrame {
+public class GUI_Juego1 extends javax.swing.JFrame {
 
-    private static final JPanel panelContenedor = new JPanel(new GridLayout(0, 2));
-    private static Juego1 juego1;
-    private static final Dao dao = new Dao();
-    private static JLabel nombreArrastrado; // Almacena el JLabel de nombre arrastrado
+    private final JPanel panelContenedor = new JPanel(new GridLayout(2, 2));
+    private JPanel panelCuadros = new JPanel(new GridLayout(0, 2));
+    private JPanel panelDatos = new JPanel(new GridLayout(0, 2));
+    private JPanel panelBoton = new JPanel(new FlowLayout());
+    private JPanel panelContador = new JPanel(new FlowLayout());
+    
+    private final ControlJuego1 controlJuego1 = new ControlJuego1();
 
     public GUI_Juego1() {
         initComponents();
         setFrame();
-        GUI_Juego1.juego1 = new Juego1(dao);
         try {
-            insertarCuadros();
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(GUI_Juego1.class.getName()).log(Level.SEVERE, null, ex);
+            panelCuadros = controlJuego1.rellenarPanelCuadros();
+            panelDatos = controlJuego1.rellenarPanelDatos();
+            panelBoton = controlJuego1.rellenarPanelBoton();
+            panelContador = controlJuego1.rellenarPanelContador();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Algo fallo en el juego: ¿Quién lo hizo?");
         }
-        insertarNombre();
     }
 
     private void setFrame() {
-        this.setTitle("Juego 1");
-        this.setLocationRelativeTo(null);
-        this.setContentPane(panelContenedor);
-    }
+        setTitle("¿Quién lo hizo?");
+        setLocationRelativeTo(null);
+        setContentPane(panelContenedor);
 
-    public static void insertarCuadros() throws MalformedURLException {
-        JPanel panelCuadros = new JPanel(new GridLayout(0, 1));
         panelContenedor.add(panelCuadros);
-        List<String> listaURLS = juego1.urlImg();
-        int numeroCuadros = 10;
-
-        for (int i = 0; i < numeroCuadros; i++) {
-            JLabel cuadro = new JLabel();
-            try {
-                URL imagenUrl = new URL(listaURLS.get(i));
-                ImageIcon icono = new ImageIcon(imagenUrl);
-                Image imagen = icono.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-                cuadro.setIcon(new ImageIcon(imagen));
-
-            } catch (MalformedURLException e) {
-                throw e;
-            }
-
-            // Establecer borde predeterminado para los cuadros
-            cuadro.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
-            panelCuadros.add(cuadro);
-        }
-    }
-
-    public static void insertarNombre() {
-        JPanel panelDatos = new JPanel(new GridLayout(0, 2));
         panelContenedor.add(panelDatos);
-
-        List<String> listaNombres = juego1.nombreObras();
-        List<String> listaAutores = juego1.autoresObra(dao);
-        int numeroCuadros = 10;
-
-        for (int i = 0; i < numeroCuadros; i++) {
-            String nombre = listaNombres.get(i);
-            String autor = listaAutores.get(i);
-            String mensaje = "<html> <h3>" + nombre + " </h3><br>" + autor + "</html>";
-            JLabel datosCuadro = new JLabel(mensaje);
-
-            Color colorNota = new Color(250, 235, 175);
-            datosCuadro.setBorder(BorderFactory.createLineBorder(Color.ORANGE));
-            datosCuadro.setOpaque(true);
-            datosCuadro.setBackground(colorNota);
-
-            Dimension dimension = new Dimension(200, 50);
-            datosCuadro.setPreferredSize(dimension);
-
-            datosCuadro.setHorizontalAlignment(SwingConstants.CENTER);
-
-            // Establecer TransferHandler para permitir el arrastre y la transferencia de datos
-            datosCuadro.setTransferHandler(new TransferHandler("text"));
-
-            // Agregar MouseListener para detectar el inicio y el final del arrastre
-            datosCuadro.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mousePressed(MouseEvent e) {
-                    nombreArrastrado = (JLabel) e.getSource(); // Almacenar el nombre arrastrado
-                    nombreArrastrado.setBackground(Color.ORANGE); // Cambiar el color de fondo
-                }
-
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                    nombreArrastrado = null; // Restaurar el nombre arrastrado
-                    datosCuadro.setBackground(colorNota); // Restaurar el color de fondo original
-                }
-            });
-
-            // Agregar DragGestureListener para permitir el arrastre del JLabel de nombre
-            DragSource dragSource = DragSource.getDefaultDragSource();
-            dragSource.createDefaultDragGestureRecognizer(datosCuadro, DnDConstants.ACTION_COPY, new NombreDragGestureListener());
-
-            panelDatos.add(datosCuadro);
-        }
+        panelContenedor.add(panelBoton);
+        panelContenedor.add(panelContador);
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -197,34 +113,4 @@ public class GUI_Juego1 extends JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-    // Clase interna para el TransferHandler
-    private static class NombreTransferHandler extends TransferHandler {
-
-        @Override
-        public int getSourceActions(JComponent c) {
-            return TransferHandler.COPY;
-        }
-
-        @Override
-        protected Transferable createTransferable(JComponent c) {
-            return new StringSelection(nombreArrastrado.getText());
-        }
-
-        @Override
-        protected void exportDone(JComponent source, Transferable data, int action) {
-            if (action == TransferHandler.MOVE) {
-                nombreArrastrado.setText("");
-            }
-        }
-    }
-
-    // Clase interna para el DragGestureListener
-    private static class NombreDragGestureListener implements DragGestureListener {
-
-        @Override
-        public void dragGestureRecognized(DragGestureEvent event) {
-            NombreTransferHandler handler = new NombreTransferHandler();
-            handler.exportAsDrag(nombreArrastrado, event.getTriggerEvent(), TransferHandler.COPY);
-        }
-    }
 }

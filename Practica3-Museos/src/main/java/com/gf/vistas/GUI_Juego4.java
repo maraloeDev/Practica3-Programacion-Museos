@@ -6,16 +6,25 @@ package com.gf.vistas;
 
 import com.gf.controles.Juego4;
 import com.gf.dao.Dao;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.Timer;
 
 /**
  *
@@ -23,9 +32,17 @@ import javax.swing.JPanel;
  */
 public class GUI_Juego4 extends javax.swing.JFrame {
 
-    private static final JPanel panelContenedor = new JPanel();
+    private final JPanel panelContenedor = new JPanel(new GridLayout(2, 2));
+    private static final JPanel panelMapamundi = new JPanel(new GridLayout(2, 0));
+    private static final JPanel panelCuadros = new JPanel(new GridLayout(0, 2));
+    private static final JPanel panelBoton = new JPanel(new FlowLayout());
+    private static final JPanel panelContador = new JPanel(new FlowLayout());
+
     private static Juego4 juego4;
     private static final Dao dao = new Dao();
+
+    private int tiempoContador = 360;
+    private Timer timer;
 
     public GUI_Juego4() {
         try {
@@ -33,7 +50,7 @@ public class GUI_Juego4 extends javax.swing.JFrame {
             setFrame();
             int n = (int) (Math.random() * 10);
             juego4 = new Juego4(dao, dao.getObras().get(n), dao.getObras().get(n), dao.getObras().get(n), dao.getObras().get(n));
-            insertarCuadros();
+            rellenarCuadros();
         } catch (MalformedURLException ex) {
             Logger.getLogger(GUI_Juego4.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -43,11 +60,18 @@ public class GUI_Juego4 extends javax.swing.JFrame {
         this.setTitle("Juego 4");
         this.setLocationRelativeTo(null);
         this.setContentPane(panelContenedor);
+        panelContenedor.add(panelCuadros);
     }
 
-    public static void insertarCuadros() throws MalformedURLException {
-        JPanel panelCuadros = new JPanel(new GridLayout(2, 0));
-        panelContenedor.add(panelCuadros);
+    public static void rellenarMapamundi() {
+        JLabel mapaMundi = new JLabel();
+        ImageIcon icono = new ImageIcon("recursos/Mapa del mundo.png");
+        Image imagen = icono.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+        mapaMundi.setIcon(new ImageIcon(imagen));
+        panelMapamundi.add(mapaMundi);
+    }
+
+    public static void rellenarCuadros() throws MalformedURLException {
         List<String> listaURLS = juego4.urlImg();
         List<String> listaNombres = juego4.nombreObras();
 
@@ -55,6 +79,7 @@ public class GUI_Juego4 extends javax.swing.JFrame {
 
         for (int i = 0; i < numeroCuadros; i++) {
             JLabel cuadro = new JLabel();
+            JLabel nombre = new JLabel(listaNombres.get(i));
             try {
                 URL imagenUrl = new URL(listaURLS.get(i));
                 ImageIcon icono = new ImageIcon(imagenUrl);
@@ -63,12 +88,57 @@ public class GUI_Juego4 extends javax.swing.JFrame {
             } catch (MalformedURLException e) {
                 throw e;
             }
+
+            cuadro.addMouseMotionListener(new MouseAdapter() {
+                @Override
+                public void mouseDragged(MouseEvent e) {
+                    nombre.setLocation(e.getX() + cuadro.getX() - cuadro.getWidth() / 2,
+                            e.getY() + cuadro.getY() - cuadro.getHeight() / 2);
+                }
+            });
+
+            nombre.setHorizontalAlignment(SwingConstants.CENTER);
+
             panelCuadros.add(cuadro);
-        }
-        for (int i = 0; i < numeroCuadros; i++) {
-            JLabel nombre = new JLabel(listaNombres.get(i));
             panelCuadros.add(nombre);
         }
+    }
+
+    public void rellenarPanelBoton() {
+        JButton botonOk = new JButton("OK");
+        botonOk.addActionListener((ActionEvent e) -> {
+            int contadorCuadro = 1;
+            for (int i = 0; i <= (panelCuadros.getComponents().length - 1); i = i + 2) {
+
+                JLabel cuadro = (JLabel) panelCuadros.getComponents()[i];
+                JLabel mapaMundi = (JLabel) panelMapamundi.getComponent(0);
+                if (mapaMundi.getBounds().contains(cuadro.getLocation())) {
+                    JOptionPane.showMessageDialog(null, "El cuadros " + panelCuadros.getComponents()[i + 1] + " no fue colocado");
+                    contadorCuadro++;
+                }
+            }
+        });
+        panelBoton.add(botonOk);
+
+        botonOk.setHorizontalAlignment(SwingConstants.CENTER);
+    }
+
+    public void rellenarPanelContador() {
+        JLabel contador = new JLabel();
+        ActionListener actionListener = (ActionEvent event) -> {
+            tiempoContador--;
+            contador.setName(tiempoContador + " s");
+
+            if (tiempoContador <= 0) {
+                timer.stop();
+                JOptionPane.showMessageDialog(null, "Se acabó el tiempo");
+            }
+        };
+
+        timer = new Timer(1000, actionListener);
+        timer.start();
+
+        panelContador.add(contador);
     }
 
     /**
