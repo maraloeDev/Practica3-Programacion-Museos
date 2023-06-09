@@ -7,9 +7,6 @@ package com.gf.vistas;
 import com.gf.controles.ControlJuego1;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.net.MalformedURLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
