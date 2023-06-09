@@ -1,4 +1,4 @@
-/*
+    /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
@@ -9,13 +9,14 @@ package com.gf.vistas;
  * @author Eduardo Martín-Sonseca y Mario Ortuñez
  */
 public class GUI_Juego3 extends javax.swing.JFrame {
-
     /**
      * Creates new form GUI_Juego3
      */
     public GUI_Juego3() {
         initComponents();
     }
+     
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

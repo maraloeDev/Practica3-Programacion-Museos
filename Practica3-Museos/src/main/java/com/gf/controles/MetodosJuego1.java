@@ -21,11 +21,11 @@ import java.util.List;
  * genéricas, hay que adivinar su autor
  *
  */
-public class Juego1 {
+public class MetodosJuego1 {
 
     private final List<Obras> obras = new ArrayList<>(); // Variable que guarda las obras que aparecerán en el juego
 
-    public Juego1(Dao dao) {
+    public MetodosJuego1(Dao dao) {
         List<Obras> obrasTodas = dao.getObras(); // Variable donde guardamos todas las obras
         int numeroObrasJuego = 10;
 

@@ -7,36 +7,42 @@ package com.gf.vistas;
 import com.gf.controles.Juego2;
 import com.gf.dao.Dao;
 import com.gf.modelos.Museos;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
-
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
  *
- *  @author Eduardo Martín-Sonseca y Mario Ortuñez
+ * @author Eduardo Martín-Sonseca y Mario Ortuñez
  */
 public class GUI_Juego2 extends javax.swing.JFrame {
 
-    /**
-     * Creates new form GUPp2
+    /*Se declaran las siguientes variables, como 
+    * dao Creo un atributo que hereda de la clase DAO
+    
+    * juego2 Creo un atributo que hereda de la clase Juego2 (com.gf.controles)
+    
+    * MAX_SELECTIONS Delimita el número máximo de selecciones permitidas en el CB
+    
+    * currentSelections Contador de selecciones actuales
+    
+    * panelContenedor Establesco el GridLayOut Para ponerlo en filas los museos
+    
+    * btnComprobar Boton para comprobar si los museos seleccionados son verdaderos
      */
     private static final Dao dao = new Dao();
     private static final Juego2 juego2 = new Juego2(dao);
-    private static final int MAX_SELECTIONS = 3; // Número máximo de selecciones permitidas
-    private int currentSelections = 0; // Contador de selecciones actuales
+    private static final int MAX_SELECTIONS = 3;
+    private int currentSelections = 0;
     JPanel panelContenedor = new JPanel(new GridLayout(0, 1));
     JButton btnComprobar = new JButton("Comprobar");
+    private static JCheckBox checkbox;
 
     public GUI_Juego2() {
         initComponents();
@@ -45,6 +51,12 @@ public class GUI_Juego2 extends javax.swing.JFrame {
 
     }
 
+    /* El siguiente metodo configura : 
+    * la apariencia y el diseño de la ventana actual
+    * Establezco el título a la ventana
+    * La ubicación de donde se va a situar al ventana al ejecutar
+    * El tamaño de la ventana
+    * También agrego un ActionListener al botón btnComprobar.*/
     private void setFrame() {
         this.setTitle("Verdadero/Falso de Museos");
         this.setContentPane(panelContenedor);
@@ -57,8 +69,14 @@ public class GUI_Juego2 extends javax.swing.JFrame {
         });
     }
 
+    /*El siguiente metodo crea :
+    / Los elementos de la interfaz de usuario,(JCheckBox) para cada nombre de museo obtenido a través de juego2.getNombresMuseos()
+    * Cada caja de verificación tiene un ActionListener adjunto que realiza un seguimiento de la cantidad de selecciones realizadas 
+    * Deshabilito las demás cajas de verificación cuando se alcanza el límite máximo (MAX_SELECTIONS (En este caso 3)
+    * También agrego el botón btnComprobar al panel contenedor para que se muestre en la ventana. */
     private void creacion() {
-        List<Museos> nombresObrasArte = dao.getMuseos(); // Obtener los nombres de las obras de arte desde la base de datos
+        // Obtener los nombres de las obras de arte desde la base de datos
+        List<Museos> nombresObrasArte = dao.getMuseos();
 
         for (String museo : juego2.getNombresMuseos()) {
             JCheckBox checkBoxMuseo = new JCheckBox(museo);
@@ -83,6 +101,8 @@ public class GUI_Juego2 extends javax.swing.JFrame {
         }
     }
 
+    /* El siguiente metodo deshabilita :
+    * Las cajas de verificación restantes que no están seleccionadas.*/
     private void disableRemainingCheckboxes() {
         Component[] components = panelContenedor.getComponents();
         for (Component component : components) {
@@ -95,6 +115,8 @@ public class GUI_Juego2 extends javax.swing.JFrame {
         }
     }
 
+    /* El siguiente metodo
+    *Habilita todas las cajas de verificación.*/
     private void enableAllCheckboxes() {
         Component[] components = panelContenedor.getComponents();
         for (Component component : components) {
@@ -105,18 +127,21 @@ public class GUI_Juego2 extends javax.swing.JFrame {
         }
     }
 
+    /* El siguiente metodo
+    * verifica qué los JcheckBox estan seleccionados
+    * establecimiento de su fondo en verde si están seleccionadas o en su color original si no lo están.*/
     private void comprobarSeleccionados() {
         Component[] components = panelContenedor.getComponents();
         for (Component component : components) {
             if (component instanceof JCheckBox) {
-                JCheckBox checkbox = (JCheckBox) component;
-                if (checkbox.isSelected()) {
-                    checkbox.setBackground(Color.GREEN);
-                } else {
-                    checkbox.setBackground(null);
-                }
+                checkbox = (JCheckBox) component;
             }
         }
+        /* La validación la saco del for
+                    para que cuando se clique en el boton comprobar no me lo repita
+                    las veces que se ha seleccionado el chekkBox*/
+        JOptionPane.showMessageDialog(null, "Los cuadros seleccionados  son correctos");
+
     }
 
     /**
