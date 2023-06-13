@@ -32,12 +32,7 @@ private GUI_Juego4 guiJ4 = new GUI_Juego4();
         setSize(500,500);
         this.setLocationRelativeTo(null);
 
-        JButton button1 = new JButton("Juego 1");
-        button1.addActionListener((ActionEvent e) -> {
-            OtherFrame otherFrame = new OtherFrame();
-            guiJ1.setVisible(true);
-            
-        });
+       
 
         JButton button2 = new JButton("Juego 2");
         button2.addActionListener((ActionEvent e) -> {
@@ -58,19 +53,10 @@ private GUI_Juego4 guiJ4 = new GUI_Juego4();
         });
 
         getContentPane().setLayout(new GridLayout(4, 1));
-        getContentPane().add(button1);
+    
         getContentPane().add(button2);
         getContentPane().add(button3);
         getContentPane().add(button4);
-    }
-    
-public class OtherFrame extends JFrame {
-
-        public OtherFrame() {
-            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            setTitle("Ventana principal");
-            setSize(300, 200);
-        }
     }
 
     /**
